@@ -1,0 +1,11 @@
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+    <label for="first-name">UserName: </label>
+    <input id="first-name" type="text" formControlName="username">
+
+    <label for="last-name">Password: </label>
+    <input id="last-name" type="text" formControlName="password">
+
+    <button mat-button type="submit">Login</button>
+
+</form>
