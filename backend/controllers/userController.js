@@ -1,11 +1,16 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const User = require('../models/userModel');
+const APIError = require('../config/APIError');
 
 const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '3d'
 });
 
+// @desc Registering User
+// @route POST /userRegister
+// @access PUBLIC
 const userRegister = async (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -19,35 +24,43 @@ const userRegister = async (req, res, next) => {
             password: hashedPassword
         };
         await User.create(user);
-        res.send('user Registered');
-        next();
+        res.send({ message: 'user Registered' });
     } else {
-        res.send('Username already exists');
-        next();
+        const error = 'Username already exists';
+        next(APIError.conflict(error));
     }
 };
 
+// @desc Logging in User
+// @route POST /userLogin
+// @access PUBLIC
 const userLogin = async (req, res, next) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-    if (user && (await bcrypt.compare(password, user.password))) {
-        res.send({
-            token: generateToken(user._id)
-        });
+    if (user) {
+        if (await bcrypt.compare(password, user.password)) {
+            res.send({
+                token: generateToken(user._id)
+            });
+        } else {
+            next(APIError.badRequest('Password doesnt match'));
+        }
     } else {
-        res.send('User or password mismatch');
-        next();
+        next(APIError.notFound('Username not found'));
     }
 };
 
+// @desc Getting user details
+// @route GET /userGet
+// @access PRIVATE
 const userGet = async (req, res, next) => {
     if (req.user !== undefined) {
         const username = req.user.username;
         const user = await User.findOne({ username });
         res.send(user);
     } else {
-        res.send('Auth token modified');
-        next();
+        const error = 'Auth token modified';
+        next(APIError.badRequest(error));
     }
 };
 

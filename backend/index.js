@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 const userRoute = require('./routes/userRoute');
 const connectDB = require('./config/db');
+const errorHandler = require('./middlewares/errorMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,7 +13,9 @@ const PORT = process.env.PORT || 3000;
 // Mongodb connection
 connectDB();
 
+// Initializing server
 app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`cinegasm backend server listening at port - ${process.env.PORT}`);
 });
 
@@ -28,3 +31,6 @@ app.use(bodyParser.json());
 
 // Redirecting to modular routes
 app.use('/users', userRoute);
+
+// Custom Error Handler middleware
+app.use(errorHandler);

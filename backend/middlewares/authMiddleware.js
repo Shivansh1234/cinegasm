@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
 
+const User = require('../models/userModel');
+const APIError = require('../config/APIError');
+
+// @desc Middleware to protect auth routes
 const protect = async (req, res, next) => {
     let token = '';
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -15,11 +18,10 @@ const protect = async (req, res, next) => {
             req.user = await User.findById(decoded.id).select('-password');
             next();
         } catch (err) {
-            console.log(err);
-            next();
+            next(APIError.unauthorized('Unauthorized access'));
         }
     } else {
-        res.send('No token found');
+        next(APIError.notFound('Auth token missing'));
     }
 };
 
