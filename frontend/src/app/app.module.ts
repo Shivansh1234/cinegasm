@@ -11,6 +11,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

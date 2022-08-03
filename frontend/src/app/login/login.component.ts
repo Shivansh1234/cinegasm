@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { LoginForm } from '../login-form';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,13 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
   loginForm = this.fb.group({
-    username: ['shivansh'],
-    password: ['shivansh']
+    username: ['', Validators.required],
+    password: ['', Validators.required]
   });
 
   onLogin(): void {
-    this.authService.login(this.loginForm.value).subscribe(data => {
+    const loginFormData: LoginForm = this.loginForm.value;
+    this.authService.login(loginFormData).subscribe(data => {
       this.authService.storeUserData(data.token as string);
       if (localStorage.getItem('token')) {
         this.router.navigate(['/profile']);

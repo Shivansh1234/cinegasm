@@ -6,6 +6,6 @@
     <label for="last-name">Password: </label>
     <input id="last-name" type="text" formControlName="password">
 
-    <button mat-button type="submit">Register</button>
+    <button mat-button type="submit" [disabled]="registerForm.invalid">Register</button>
 
 </form>

@@ -6,6 +6,6 @@
     <label for="last-name">Password: </label>
     <input id="last-name" type="text" formControlName="password">
 
-    <button mat-button type="submit">Login</button>
+    <button mat-button type="submit" [disabled]="loginForm.invalid">Login</button>
 
 </form>

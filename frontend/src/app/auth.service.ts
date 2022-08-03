@@ -1,28 +1,39 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { LoginForm } from './login-form';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  isLogin$ = new BehaviorSubject<boolean>(this.hasToken());
 
-  login(data: any): Observable<any> {
-    return this.http.post('http://localhost:8000/users/userLogin', data);
+  constructor(private http: HttpClient, private router: Router) { }
+
+  login(loginFormData: LoginForm): Observable<any> {
+    return this.http.post('http://localhost:8000/users/userLogin', loginFormData);
   }
 
-  isLoggedIn(): boolean {
-    if (localStorage.getItem('token') !== null) {
-      return true;
-    } else {
-      return false;
-    }
+  logout(): void {
+    localStorage.removeItem('token');
+    this.isLogin$.next(false);
+    this.router.navigate(['/login']);
+  }
+
+  hasToken(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.isLogin$.asObservable();
   }
 
   storeUserData(token: string) {
     localStorage.setItem('token', token);
+    this.isLogin$.next(true);
   }
 
 }

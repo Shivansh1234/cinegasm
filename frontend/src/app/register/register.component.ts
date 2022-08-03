@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RegisterForm } from '../register-form';
 import { UserService } from '../user.service';
 
 @Component({
@@ -11,13 +12,14 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private userService: UserService) { }
 
-  registerForm = this.fb.group({
-    username: [''],
-    password: ['']
+  registerForm: FormGroup = this.fb.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required]
   });
 
   onRegister(): void {
-    this.userService.register(this.registerForm.value).subscribe(data => {
+    const registerFormData: RegisterForm = this.registerForm.value;
+    this.userService.register(registerFormData).subscribe(data => {
       console.log(data);
     });
   }

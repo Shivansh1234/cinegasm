@@ -1,1 +1,22 @@
-<p>header works!</p>
+<p>
+    <mat-toolbar>
+        <span>Cinegasm</span>
+        <span class="example-spacer"></span>
+
+        <!-- Login mode -->
+        <button *ngIf="isLoggedIn | async" mat-icon-button [routerLink]="['/profile']">
+            <span>Profile</span>
+        </button>
+        <button *ngIf="isLoggedIn | async" mat-icon-button (click)="logout()">
+            <span>Logout</span>
+        </button>
+
+        <!-- Logout mode -->
+        <button *ngIf="!(isLoggedIn | async)" mat-icon-button [routerLink]="['/login']">
+            <span>Login</span>
+        </button>
+        <button *ngIf="!(isLoggedIn | async)" mat-icon-button [routerLink]="['/register']">
+            <span>Register</span>
+        </button>
+    </mat-toolbar>
+</p>
