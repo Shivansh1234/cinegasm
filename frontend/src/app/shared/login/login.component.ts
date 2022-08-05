@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { LoginForm } from '../login-form';
+import { AuthService } from '../../auth.service';
+import { LoginForm } from '../../login-form';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(loginFormData).subscribe(data => {
       this.authService.storeUserData(data.token as string);
       if (localStorage.getItem('token')) {
-        this.router.navigate(['/profile']);
+        this.router.navigate(['user/profile']);
       } else {
         console.log('please authenticate first');
       }

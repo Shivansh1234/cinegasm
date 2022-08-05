@@ -20,7 +20,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     this.isLogin$.next(false);
-    this.router.navigate(['/login']);
+    this.router.navigate(['common/login']);
   }
 
   hasToken(): boolean {
