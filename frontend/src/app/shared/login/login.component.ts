@@ -21,8 +21,9 @@ export class LoginComponent implements OnInit {
   onLogin(): void {
     const loginFormData: LoginForm = this.loginForm.value;
     this.authService.login(loginFormData).subscribe(data => {
-      this.authService.storeUserData(data.token as string);
+      this.authService.storeUserData(data.data.token as string);
       if (localStorage.getItem('token')) {
+        console.log(data);
         this.router.navigate(['user/profile']);
       } else {
         console.log('please authenticate first');

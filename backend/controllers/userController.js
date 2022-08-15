@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
 const APIError = require('../config/APIError');
+const APIResponse = require('../config/APIResponse');
 
 const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '3d'
@@ -24,7 +25,9 @@ const userRegister = async (req, res, next) => {
             password: hashedPassword
         };
         await User.create(user);
-        res.send({ message: 'user Registered' });
+        const createdData = null;
+        const createdMessage = 'User registered successfully';
+        res.send(APIResponse.created(createdMessage, createdData));
     } else {
         const error = 'Username already exists';
         next(APIError.conflict(error));
@@ -39,9 +42,14 @@ const userLogin = async (req, res, next) => {
     const user = await User.findOne({ username });
     if (user) {
         if (await bcrypt.compare(password, user.password)) {
-            res.send({
+            const getMessage = 'Logged In successfully';
+            const getData = {
+                user: {
+                    username: user.username
+                },
                 token: generateToken(user._id)
-            });
+            };
+            res.send(APIResponse.get(getMessage, getData));
         } else {
             next(APIError.badRequest('Password doesnt match'));
         }
@@ -54,10 +62,18 @@ const userLogin = async (req, res, next) => {
 // @route GET /userGet
 // @access PRIVATE
 const userGet = async (req, res, next) => {
+    console.log(req);
     if (req.user !== undefined) {
         const username = req.user.username;
         const user = await User.findOne({ username });
-        res.send(user);
+
+        const getMessage = 'User data fetched successfully';
+        const getData = {
+            user: {
+                username: user.username
+            }
+        };
+        res.send(APIResponse.get(getMessage, getData));
     } else {
         const error = 'Auth token modified';
         next(APIError.badRequest(error));

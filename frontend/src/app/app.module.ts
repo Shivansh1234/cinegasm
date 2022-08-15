@@ -14,12 +14,14 @@ import { FooterComponent } from './footer/footer.component';
 // Material
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
