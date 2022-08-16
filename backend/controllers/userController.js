@@ -62,7 +62,6 @@ const userLogin = async (req, res, next) => {
 // @route GET /userGet
 // @access PRIVATE
 const userGet = async (req, res, next) => {
-    console.log(req);
     if (req.user !== undefined) {
         const username = req.user.username;
         const user = await User.findOne({ username });

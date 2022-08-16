@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { LoginForm } from './login-form';
 
 @Injectable({
@@ -14,7 +14,9 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
 
   login(loginFormData: LoginForm): Observable<any> {
-    return this.http.post('http://localhost:8000/users/userLogin', loginFormData);
+    return this.http.post('http://localhost:8000/users/userLogin', loginFormData).pipe(
+      catchError(this.handleError)
+    );
   }
 
   logout(): void {
@@ -34,6 +36,10 @@ export class AuthService {
   storeUserData(token: string) {
     localStorage.setItem('token', token);
     this.isLogin$.next(true);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    return throwError(() => error.error);
   }
 
 }

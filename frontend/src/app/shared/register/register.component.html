@@ -1,11 +1,21 @@
-<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+<div align="center">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
 
-    <label for="first-name">UserName: </label>
-    <input id="first-name" type="text" formControlName="username">
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username">
+            </mat-form-field>
+        </p>
 
-    <label for="last-name">Password: </label>
-    <input id="last-name" type="text" formControlName="password">
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password">
+            </mat-form-field>
+        </p>
 
-    <button mat-button type="submit" [disabled]="registerForm.invalid">Register</button>
+        <button mat-button type="submit" [disabled]="registerForm.invalid">Register</button>
 
-</form>
+    </form>
+</div>

@@ -10,11 +10,12 @@ import { AppComponent } from './app.component';
 // Components
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './home/home.component';
 
 // Material
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { HomeComponent } from './home/home.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -29,8 +30,11 @@ import { HomeComponent } from './home/home.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatToolbarModule,
-    MatButtonModule
+
+    // Material
+    MatButtonModule,
+    MatSnackBarModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,11 +1,23 @@
-<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+<div align="center">
 
-    <label for="first-name">UserName: </label>
-    <input id="first-name" type="text" formControlName="username">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
 
-    <label for="last-name">Password: </label>
-    <input id="last-name" type="text" formControlName="password">
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username">
+            </mat-form-field>
+        </p>
 
-    <button mat-button type="submit" [disabled]="loginForm.invalid">Login</button>
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password">
+            </mat-form-field>
+        </p>
 
-</form>
+        <button mat-button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+    </form>
+
+</div>
