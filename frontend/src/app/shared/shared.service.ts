@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
-import { RegisterForm } from '../register-form';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Register } from '../models/register';
+import { RegisterForm } from '../models/register-form';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class SharedService {
 
   constructor(private http: HttpClient) { }
 
-  register(registerFormData: RegisterForm) {
-    return this.http.post('http://localhost:8000/users/userRegister', registerFormData).pipe(
+  register(registerFormData: RegisterForm): Observable<Register> {
+    return this.http.post<Register>('http://localhost:8000/users/userRegister', registerFormData).pipe(
       catchError(this.handleError)
     );
   }

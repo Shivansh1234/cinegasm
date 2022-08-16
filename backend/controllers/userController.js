@@ -25,7 +25,7 @@ const userRegister = async (req, res, next) => {
             password: hashedPassword
         };
         await User.create(user);
-        const createdData = null;
+        const createdData = { username };
         const createdMessage = 'User registered successfully';
         res.send(APIResponse.created(createdMessage, createdData));
     } else {
@@ -44,9 +44,7 @@ const userLogin = async (req, res, next) => {
         if (await bcrypt.compare(password, user.password)) {
             const getMessage = 'Logged In successfully';
             const getData = {
-                user: {
-                    username: user.username
-                },
+                username: user.username,
                 token: generateToken(user._id)
             };
             res.send(APIResponse.get(getMessage, getData));
@@ -68,9 +66,8 @@ const userGet = async (req, res, next) => {
 
         const getMessage = 'User data fetched successfully';
         const getData = {
-            user: {
-                username: user.username
-            }
+            username: user.username,
+            token: generateToken(user._id)
         };
         res.send(APIResponse.get(getMessage, getData));
     } else {

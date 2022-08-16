@@ -2,7 +2,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
-import { LoginForm } from './login-form';
+import { LoginForm } from './models/login-form';
+import { Login } from './models/login';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(loginFormData: LoginForm): Observable<any> {
-    return this.http.post('http://localhost:8000/users/userLogin', loginFormData).pipe(
+  login(loginFormData: LoginForm): Observable<Login> {
+    return this.http.post<Login>('http://localhost:8000/users/userLogin', loginFormData).pipe(
       catchError(this.handleError)
     );
   }
