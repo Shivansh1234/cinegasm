@@ -17,6 +17,11 @@ const routes: Routes = [
     loadChildren: () => import('./user/user.module').then(u => u.UserModule),
     canActivate: [LoginGuard]
   },
+  {
+    path: 'movie',
+    loadChildren: () => import('./movie/movie.module').then(m => m.MovieModule),
+    canActivate: [LoginGuard]
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { LoginForm } from './models/login-form';
 import { Login } from './models/login';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
 
   login(loginFormData: LoginForm): Observable<Login> {
-    return this.http.post<Login>('http://localhost:8000/users/userLogin', loginFormData).pipe(
+    return this.http.post<Login>(`${environment.baseURL}/users/userLogin`, loginFormData).pipe(
       catchError(this.handleError)
     );
   }

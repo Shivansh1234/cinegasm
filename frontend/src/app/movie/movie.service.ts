@@ -1,19 +1,17 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Register } from '../models/register';
-import { RegisterForm } from '../models/register-form';
+import { Movie } from '../models/movie';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SharedService {
+export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  register(registerFormData: RegisterForm): Observable<Register> {
-    return this.http.post<Register>(`${environment.baseURL}/users/userRegister`, registerFormData).pipe(
+  getMovieInfo(movieData: string): Observable<Movie> {
+    return this.http.get<Movie>(`http://www.omdbapi.com/?i=${movieData}&apikey=1d5460ac`).pipe(
       catchError(this.handleError)
     );
   }

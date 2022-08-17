@@ -1,0 +1,10 @@
+<p>
+    <mat-form-field appearance="outline">
+        <mat-label>Movie ID/Name</mat-label>
+        <input matInput [formControl]="movieInput">
+    </mat-form-field>
+</p>
+
+<p>
+    <button mat-button (click)="onAddMovie()">Add</button>
+</p>

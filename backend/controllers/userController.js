@@ -66,8 +66,7 @@ const userGet = async (req, res, next) => {
 
         const getMessage = 'User data fetched successfully';
         const getData = {
-            username: user.username,
-            token: generateToken(user._id)
+            username: user.username
         };
         res.send(APIResponse.get(getMessage, getData));
     } else {

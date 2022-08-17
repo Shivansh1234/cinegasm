@@ -1,6 +1,10 @@
 <p>
     <mat-toolbar>
         <span>Cinegasm</span>
+
+        <button *ngIf="isLoggedIn | async" mat-icon-button [routerLink]="['movie']">
+            <span>Movie</span>
+        </button>
         <span class="example-spacer"></span>
 
         <!-- Login mode -->

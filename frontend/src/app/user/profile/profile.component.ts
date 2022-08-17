@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CustomError } from 'src/app/models/custom-error';
+import { User } from 'src/app/models/user';
+import { SnackbarService } from 'src/app/snackbar.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -8,12 +11,17 @@ import { UserService } from '../user.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private snackbarService: SnackbarService) { }
 
   getUserData(): void {
-    this.userService.getUserData().subscribe(data => {
-      console.log(data);
-    })
+    this.userService.getUserData().subscribe({
+      next: (data: User) => {
+        console.log(data);
+      },
+      error: (err: CustomError) => {
+        this.snackbarService.error(`${err.message}`, `${err.status}`);
+      }
+    });
   }
 
   ngOnInit(): void {

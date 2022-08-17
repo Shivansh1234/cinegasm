@@ -1,7 +1,9 @@
 import { APIResponse } from "./api-response";
 
 export interface Register extends APIResponse {
-    data: {
-        username: string;
-    }
+    data: RegisterData;
+}
+
+interface RegisterData {
+    username: string;
 }
