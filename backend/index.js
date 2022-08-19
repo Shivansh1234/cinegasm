@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 // eslint-disable-next-line no-unused-vars
 const dotenv = require('dotenv').config();
 const userRoute = require('./routes/userRoute');
+const movieRoute = require('./routes/movieRoute');
 const connectDB = require('./config/db');
 const errorHandler = require('./middlewares/errorMiddleware');
 
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 
 // Redirecting to modular routes
 app.use('/users', userRoute);
+app.use('/movie', movieRoute);
 
 // Custom Error Handler middleware
 app.use(errorHandler);
