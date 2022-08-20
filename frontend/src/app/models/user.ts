@@ -4,6 +4,6 @@ export interface User extends APIResponse {
     data: UserData;
 }
 
-interface UserData {
+export interface UserData {
     username: string;
 }

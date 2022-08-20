@@ -5,6 +5,7 @@ import { SnackbarService } from 'src/app/snackbar.service';
 import { RegisterForm } from '../../models/register-form';
 import { SharedService } from '../shared.service';
 import { Register } from 'src/app/models/register';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,8 @@ import { Register } from 'src/app/models/register';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private sharedService: SharedService, private snackbarService: SnackbarService) { }
+  constructor(private fb: FormBuilder, private sharedService: SharedService, private snackbarService: SnackbarService,
+    private router: Router) { }
 
   registerForm: FormGroup = this.fb.group({
     username: ['', Validators.required],
@@ -23,8 +25,9 @@ export class RegisterComponent implements OnInit {
   onRegister(): void {
     const registerFormData: RegisterForm = this.registerForm.value;
     this.sharedService.register(registerFormData).subscribe({
-      next: (data: Register) => {
-        this.snackbarService.success(`${data.data.username} - ${data.message}`, `Ok`);
+      next: (registerData: Register) => {
+        this.router.navigate(['common/login']);
+        this.snackbarService.success(`${registerData.data.username} - ${registerData.message}`, `Ok`);
       },
       error: (err: CustomError) => {
         this.snackbarService.error(err.message, `${err.status}`);

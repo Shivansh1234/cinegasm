@@ -5,6 +5,7 @@ import { CustomError } from 'src/app/models/custom-error';
 import { AuthService } from '../../auth.service';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { LoginForm } from 'src/app/models/login-form';
+import { Login } from 'src/app/models/login';
 
 @Component({
   selector: 'app-login',
@@ -25,11 +26,10 @@ export class LoginComponent implements OnInit {
     const loginFormData: LoginForm = this.loginForm.value;
 
     this.authService.login(loginFormData).subscribe({
-      next: (data: any) => {
-        this.authService.storeUserData(data.data.token as string);
+      next: (loginData: Login) => {
+        this.authService.storeUserData(loginData.data.token as string);
         if (localStorage.getItem('token')) {
-          console.log(data);
-          this.router.navigate(['user/profile']);
+          this.router.navigate(['movie']);
         } else {
           console.log('please authenticate first');
         }
