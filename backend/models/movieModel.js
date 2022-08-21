@@ -19,25 +19,25 @@ const movieSchema = new Schema({
         type: String
     },
     Genre: {
-        type: String
+        type: [String]
     },
     Director: {
-        type: String
+        type: [String]
     },
     Writer: {
-        type: String
+        type: [String]
     },
     Actors: {
-        type: String
+        type: [String]
     },
     Plot: {
         type: String
     },
     Language: {
-        type: String
+        type: [String]
     },
     Country: {
-        type: String
+        type: [String]
     },
     Awards: {
         type: String

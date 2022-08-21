@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Register } from '../models/register';
+import { RegisterRes } from '../models/register';
 import { RegisterForm } from '../models/register-form';
 
 @Injectable({
@@ -12,8 +12,8 @@ export class SharedService {
 
   constructor(private http: HttpClient) { }
 
-  register(registerFormData: RegisterForm): Observable<Register> {
-    return this.http.post<Register>(`${environment.baseURL}/users/userRegister`, registerFormData).pipe(
+  register(registerFormData: RegisterForm): Observable<RegisterRes> {
+    return this.http.post<RegisterRes>(`${environment.baseURL}/users/userRegister`, registerFormData).pipe(
       catchError(this.handleError)
     );
   }

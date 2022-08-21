@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { LoginForm } from './models/login-form';
-import { Login } from './models/login';
+import { LoginRes } from './models/login';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,8 +15,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(loginFormData: LoginForm): Observable<Login> {
-    return this.http.post<Login>(`${environment.baseURL}/users/userLogin`, loginFormData).pipe(
+  login(loginFormData: LoginForm): Observable<LoginRes> {
+    return this.http.post<LoginRes>(`${environment.baseURL}/users/userLogin`, loginFormData).pipe(
       catchError(this.handleError)
     );
   }

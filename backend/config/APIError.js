@@ -14,6 +14,10 @@ class APIError extends Error {
         return new APIError(409, msg);
     }
 
+    static noContent(msg) {
+        return new APIError(404, msg);
+    }
+
     static notFound(msg) {
         return new APIError(404, msg);
     }

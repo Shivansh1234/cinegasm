@@ -5,7 +5,7 @@ import { CustomError } from 'src/app/models/custom-error';
 import { AuthService } from '../../auth.service';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { LoginForm } from 'src/app/models/login-form';
-import { Login } from 'src/app/models/login';
+import { LoginRes } from 'src/app/models/login';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     const loginFormData: LoginForm = this.loginForm.value;
 
     this.authService.login(loginFormData).subscribe({
-      next: (loginData: Login) => {
+      next: (loginData: LoginRes) => {
         this.authService.storeUserData(loginData.data.token as string);
         if (localStorage.getItem('token')) {
           this.router.navigate(['movie']);

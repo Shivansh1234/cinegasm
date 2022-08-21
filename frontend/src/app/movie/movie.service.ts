@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Movie } from '../models/movie';
+import { Movie, MovieRes } from '../models/movie';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,18 @@ export class MovieService {
     return this.http.post(`${environment.baseURL}/movie/addMovie`, movie, { headers }).pipe(
       catchError(this.handleError)
     );
+  }
+
+  getMovieList(): Observable<MovieRes> {
+    let userToken = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + userToken
+    });
+
+    return this.http.get<MovieRes>(`${environment.baseURL}/movie/getMovies`, {headers}).pipe(
+      catchError(this.handleError)
+    )
   }
 
   private handleError(error: HttpErrorResponse) {

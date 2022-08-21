@@ -4,7 +4,7 @@ import { CustomError } from '../../models/custom-error';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { RegisterForm } from '../../models/register-form';
 import { SharedService } from '../shared.service';
-import { Register } from 'src/app/models/register';
+import { RegisterRes } from 'src/app/models/register';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
   onRegister(): void {
     const registerFormData: RegisterForm = this.registerForm.value;
     this.sharedService.register(registerFormData).subscribe({
-      next: (registerData: Register) => {
+      next: (registerData: RegisterRes) => {
         this.router.navigate(['common/login']);
         this.snackbarService.success(`${registerData.data.username} - ${registerData.message}`, `Ok`);
       },

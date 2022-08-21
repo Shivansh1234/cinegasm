@@ -1,10 +1,10 @@
 import { APIResponse } from "./api-response";
 
-export interface Login extends APIResponse {
-    data: LoginData;
+export interface LoginRes extends APIResponse {
+    data: Login;
 }
 
-interface LoginData {
+interface Login {
     username: string;
     token: string;
 }

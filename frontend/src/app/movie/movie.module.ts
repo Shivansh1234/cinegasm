@@ -9,11 +9,15 @@ import { MovieComponent } from './movie/movie.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MovieListComponent } from './movie/movie-list/movie-list.component';
+import { AddMovieComponent } from './movie/add-movie/add-movie.component';
 
 
 @NgModule({
   declarations: [
-    MovieComponent
+    MovieComponent,
+    MovieListComponent,
+    AddMovieComponent
   ],
   imports: [
     CommonModule,
