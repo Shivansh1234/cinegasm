@@ -1,16 +1,19 @@
-<p>
-    <mat-radio-group [formControl]="movieRadioChoice">
-        <mat-radio-button [value]="true">Add by Search</mat-radio-button>
-        <mat-radio-button [value]="false">Add by IMDb ID</mat-radio-button>
-    </mat-radio-group>
-</p>
-<p>
-    <mat-form-field appearance="outline">
-        <mat-label>Movie ID/Name</mat-label>
-        <input matInput [formControl]="movieInput">
-    </mat-form-field>
-</p>
+<div [formGroup]="addMovieForm" align="center">
+    <p>
+        <label>Add by</label>
+        <mat-radio-group formControlName="addByName">
+            <mat-radio-button [value]="true">Search</mat-radio-button>&nbsp;
+            <mat-radio-button [value]="false">IMDb ID</mat-radio-button>
+        </mat-radio-group>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Movie ID/Name</mat-label>
+            <input matInput formControlName="movieInput">
+        </mat-form-field>
+    </p>
 
-<p>
-    <button mat-button (click)="onAddMovie()">Add</button>
-</p>
+    <p>
+        <button mat-button (click)="onAddMovie()" [disabled]="addMovieForm.invalid">Add</button>
+    </p>
+</div>

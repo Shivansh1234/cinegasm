@@ -1,36 +1,54 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AddMovieForm } from 'src/app/models/add-movie-form';
 import { CustomError } from 'src/app/models/custom-error';
 import { AddMovieRes, Movie } from 'src/app/models/movie';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { MovieService } from '../movie.service';
+import { AddMovieDialogComponent } from './add-movie-dialog/add-movie-dialog.component';
 
 @Component({
   selector: 'app-add-movie',
   templateUrl: './add-movie.component.html',
   styleUrls: ['./add-movie.component.css']
 })
-export class AddMovieComponent  {
+export class AddMovieComponent {
 
-  constructor(private movieService: MovieService, private snackbarService: SnackbarService) { }
+  constructor(
+    private movieService: MovieService,
+    private snackbarService: SnackbarService,
+    private dialog: MatDialog,
+    private fb: FormBuilder
+  ) { }
 
-  movieRadioChoice = new FormControl(true);
-  movieInput = new FormControl('tt0111161');
+
+  addMovieForm: FormGroup = this.fb.group({
+    addByName: ['', Validators.required],
+    movieInput: ['', Validators.required]
+  });
 
   onAddMovie(): void {
-    const movieId: string = this.movieInput.value;
-    this.movieService.getMovieInfo(movieId).subscribe({
-      next: (data: Movie) => {
-        if (data.Response === 'True') {
-          this.onAdd(data);
+    const addMovieFormData: AddMovieForm = this.addMovieForm.value;
+    this.movieService.getMovieInfo(addMovieFormData).subscribe({
+      next: (movieData: Movie) => {
+        if (movieData.Response === 'True') {
+          const addByName: boolean = addMovieFormData.addByName;
+          if (addByName) {
+            this.dialog.open(AddMovieDialogComponent, {
+              data: movieData
+            });
+          } else {
+            this.onAdd(movieData);
+          }
         } else {
-          this.snackbarService.error(`${data.Response}`, `Ok`);
+          this.snackbarService.error(`${movieData.Response}`, `Ok`);
         }
       },
       error: (err: CustomError) => {
         this.snackbarService.error(`${err.message}`, 'Ok');
       }
-    })
+    });
   }
 
   onAdd(data: Movie): void {
@@ -41,6 +59,6 @@ export class AddMovieComponent  {
       error: (err: CustomError) => {
         this.snackbarService.error(err.message, 'Ok')
       }
-    });
+    })
   }
 }

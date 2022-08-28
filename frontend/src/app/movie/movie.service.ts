@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AddMovieForm } from '../models/add-movie-form';
 import { Movie, MovieRes } from '../models/movie';
 
 @Injectable({
@@ -12,8 +13,15 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  getMovieInfo(movieData: string): Observable<Movie> {
-    return this.http.get<Movie>(`http://www.omdbapi.com/?i=${movieData}&apikey=1d5460ac`).pipe(
+  getMovieInfo(addMovieFormData: AddMovieForm): Observable<Movie> {
+    const movieInput = addMovieFormData.movieInput;
+    const addByName = addMovieFormData.addByName;
+    if (addByName) {
+      return this.http.get<Movie>(`http://www.omdbapi.com/?t=${movieInput}&apikey=1d5460ac`).pipe(
+      catchError(this.handleError)
+    );
+    }
+    return this.http.get<Movie>(`http://www.omdbapi.com/?i=${movieInput}&apikey=1d5460ac`).pipe(
       catchError(this.handleError)
     );
   }
