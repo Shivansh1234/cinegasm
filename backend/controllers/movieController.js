@@ -31,11 +31,11 @@ const addMovie = async (req, res, next) => {
     const movie = req.body;
 
     const userFilter = { _id: userId };
-    const movieAddQuery = { $push: { movies: movie } };
     const movieMatchQuery = { movies: { $elemMatch: { imdbID: movie.imdbID } } };
     const movieList = await User.findOne(userFilter, movieMatchQuery);
     if (movieList.movies.length === 0) {
         const movieData = formatMovie(movie);
+        const movieAddQuery = { $push: { movies: { $each: [movie], $sort: { Title: 1 } } } };
         const result = await User.updateOne(userFilter, movieAddQuery);
         if (result.acknowledged) {
             res.send(APIResponse.created(`${movieData.Title} - Movie added`, movieData));
@@ -48,6 +48,34 @@ const addMovie = async (req, res, next) => {
     // const result = await User.updateOne(filter, query);
 };
 
+function sortMovies(req, movies) {
+    const sort = req.query.sort;
+    const order = req.query.order;
+    movies.sort((a, b) => {
+        const nameA = a[sort].toUpperCase(); // ignore upper and lowercase
+        const nameB = b[sort].toUpperCase(); // ignore upper and lowercase
+        if (order === 'desc') {
+            if (nameA > nameB) {
+                return -1;
+            }
+            if (nameA < nameB) {
+                return 1;
+            }
+            // names must be equal
+            return 0;
+        }
+        if (nameA < nameB) {
+            return -1;
+        }
+        if (nameA > nameB) {
+            return 1;
+        }
+        // names must be equal
+        return 0;
+    });
+    return movies;
+}
+
 const getMovies = async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const userId = getUserId(token);
@@ -55,12 +83,40 @@ const getMovies = async (req, res, next) => {
     const userFilter = { _id: userId };
     const movieGetQuery = { movies: 1, _id: 0 };
 
-    const movieList = await User.findOne(userFilter, movieGetQuery);
-    if (movieList.movies.length === 0) {
+    const movieObj = await User.findOne(userFilter, movieGetQuery);
+    const sortedMovies = sortMovies(req, movieObj.movies);
+
+    if (sortedMovies.length === 0) {
         next(APIError.noContent('No movies found'));
     } else {
-        res.send(APIResponse.get('Movies fetched successfully', movieList.movies));
+        const pageIndex = parseInt(req.query.pageIndex, 10);
+        const pageSize = parseInt(req.query.pageSize, 10);
+        const first = pageSize * (pageIndex - 1);
+        const last = first + pageSize;
+        const movieList = sortedMovies.slice(first, last);
+        const movieResp = {
+            movies: movieList,
+            total: movieObj.movies.length,
+            pageIndex,
+            pageSize
+        };
+        res.send(APIResponse.get('Movies fetched successfully', movieResp));
     }
 };
 
-module.exports = { addMovie, getMovies };
+const getActorMovies = async (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const userId = getUserId(token);
+    const actor = req.body.actor;
+
+    const userFilter = { _id: userId };
+    const actorMatchQuery = { movies: { $elemMatch: { Actors: actor } } };
+    const actorMovieList = await User.findOne(userFilter, actorMatchQuery);
+    if (actorMovieList.movies.length) {
+        res.send(APIResponse.get('Actor movies fetched successfully', actorMovieList));
+    } else {
+        next(APIError.noContent(`No movies found with actor - ${actor}`));
+    }
+};
+
+module.exports = { addMovie, getMovies, getActorMovies };

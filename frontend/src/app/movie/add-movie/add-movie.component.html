@@ -1,4 +1,10 @@
 <p>
+    <mat-radio-group [formControl]="movieRadioChoice">
+        <mat-radio-button [value]="true">Add by Search</mat-radio-button>
+        <mat-radio-button [value]="false">Add by IMDb ID</mat-radio-button>
+    </mat-radio-group>
+</p>
+<p>
     <mat-form-field appearance="outline">
         <mat-label>Movie ID/Name</mat-label>
         <input matInput [formControl]="movieInput">

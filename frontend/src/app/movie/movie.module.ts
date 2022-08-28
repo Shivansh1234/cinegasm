@@ -3,21 +3,28 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MovieRoutingModule } from './movie-routing.module';
-import { MovieComponent } from './movie/movie.component';
+
+// Component imports
+import { MovieComponent } from './movie.component';
+import { MovieListComponent } from './movie-list/movie-list.component';
+import { AddMovieComponent } from './add-movie/add-movie.component';
+import { AddMovieDialogComponent } from './add-movie/add-movie-dialog/add-movie-dialog.component';
 
 // Material imports
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MovieListComponent } from './movie/movie-list/movie-list.component';
-import { AddMovieComponent } from './movie/add-movie/add-movie.component';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
     MovieComponent,
     MovieListComponent,
-    AddMovieComponent
+    AddMovieComponent,
+    AddMovieDialogComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +34,11 @@ import { AddMovieComponent } from './movie/add-movie/add-movie.component';
     // Material
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatRadioModule
   ]
 })
 export class MovieModule { }

@@ -16,10 +16,10 @@
         </button>
 
         <!-- Logout mode -->
-        <button *ngIf="!(isLoggedIn | async)" mat-icon-button [routerLink]="['common/login']">
+        <button *ngIf="(isLoggedIn | async) === false" mat-icon-button [routerLink]="['common/login']">
             <span>Login</span>
         </button>
-        <button *ngIf="!(isLoggedIn | async)" mat-icon-button [routerLink]="['common/register']">
+        <button *ngIf="(isLoggedIn | async) === false" mat-icon-button [routerLink]="['common/register']">
             <span>Register</span>
         </button>
     </mat-toolbar>

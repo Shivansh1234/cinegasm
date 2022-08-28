@@ -34,5 +34,19 @@ export interface Movie {
 }
 
 export interface MovieRes extends APIResponse {
-    data: Movie[]
+    data: {
+        movies: Movie[];
+        pageSize: number;
+        pageIndex: number;
+        total: number;
+    }
+}
+
+export interface AddMovieRes extends APIResponse {
+    data: Movie;
+}
+
+export interface FailedMovieRes {
+    Response: string;
+    Error: string;
 }

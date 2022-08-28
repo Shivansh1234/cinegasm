@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SortDirection } from '@angular/material/sort';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Movie, MovieRes } from '../models/movie';
@@ -29,14 +30,14 @@ export class MovieService {
     );
   }
 
-  getMovieList(): Observable<MovieRes> {
+  getMovieList(sort: string, order: SortDirection, pageIndex: number, pageSize: number): Observable<MovieRes> {
     let userToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + userToken
     });
-
-    return this.http.get<MovieRes>(`${environment.baseURL}/movie/getMovies`, {headers}).pipe(
+    const movieUrl = `${environment.baseURL}/movie/getMovies?sort=${sort}&order=${order}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
+    return this.http.get<MovieRes>(movieUrl, { headers }).pipe(
       catchError(this.handleError)
     )
   }
