@@ -27,7 +27,7 @@ export class MovieListComponent implements AfterViewInit {
   movies: Movie[] = [];
 
   // Table init
-  displayedColumns: string[] = ['Index', 'Title', 'Genre', 'Year', 'Actors', 'Runtime', 'imdbRating', 'Delete'];
+  displayedColumns: string[] = ['Index', 'Title', 'Director', 'Language', 'Genre', 'Year', 'Actors', 'Runtime', 'imdbRating', 'Delete'];
   displayedColumnsWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement!: Movie | null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

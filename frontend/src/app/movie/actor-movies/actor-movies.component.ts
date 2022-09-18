@@ -12,21 +12,21 @@ export class ActorMoviesComponent implements OnInit {
 
   constructor(private movieService: MovieService, private route: ActivatedRoute) { }
 
-  actorName: string = '';
-  actorMovies: Movie[] = [];
+  listTypeMovies: Movie[] = [];
+  listType: string = '';
+  listId: string = '';
 
-  getActorMovies(actor: string): void {
-    this.movieService.getActorMovies(actor).subscribe((data) => {
-      console.log(data);
-      this.actorMovies = data.data;
+  getListTypeMovies(listType: string, listId: string): void {
+    this.movieService.getListMovies(listType, listId).subscribe((data) => {
+      this.listTypeMovies = data.data;
     })
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.actorName = params['id'];
-    });
-    this.getActorMovies(this.actorName);
+    this.listType = this.route.snapshot.params['type'];
+    this.listId = this.route.snapshot.params['id'];
+
+    this.getListTypeMovies(this.listType, this.listId);
   }
 
 }

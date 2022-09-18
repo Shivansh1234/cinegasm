@@ -128,22 +128,23 @@ const getMovies = async (req, res, next) => {
     }
 };
 
-const getActorMovies = async (req, res, next) => {
+const getListTypeMovies = async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const userId = getUserId(token);
-    const actor = req.query.actor;
+    const listType = req.query.type;
+    const listId = req.query.id;
 
     const userFilter = { _id: userId };
-    // const actorMatchQuery = { movies: { $elemMatch: { Actors: actor } } };
+    const type = listType[0].toUpperCase() + listType.slice(1);
     const actorMovieList = await User.findOne(userFilter);
-    const list = actorMovieList.movies.filter((a) => a.Actors.includes(actor));
+    const list = actorMovieList.movies.filter((a) => a[type].includes(listId));
     if (actorMovieList.movies.length) {
         res.send(APIResponse.get('Actor movies fetched successfully', list));
     } else {
-        next(APIError.noContent(`No movies found with actor - ${actor}`));
+        next(APIError.noContent(`No movies found with actor - ${listId}`));
     }
 };
 
 module.exports = {
-    addMovie, getMovies, getActorMovies, deleteMovie
+    addMovie, getMovies, getListTypeMovies, deleteMovie
 };

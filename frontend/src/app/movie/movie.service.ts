@@ -63,13 +63,13 @@ export class MovieService {
     );
   }
 
-  getActorMovies(actor: string): Observable<any> {
+  getListMovies(type: string, id: string): Observable<any> {
     let userToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + userToken
     });
-    const movieUrl = `${environment.baseURL}/movie/getActorMovies?actor=${actor}`;
+    const movieUrl = `${environment.baseURL}/movie/getListTypeMovies?type=${type}&id=${id}`;
     return this.http.get<any>(movieUrl, { headers }).pipe(
       catchError(this.handleError)
     );
