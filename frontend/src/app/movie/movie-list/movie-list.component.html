@@ -1,39 +1,100 @@
-<div>
-    <table mat-table [dataSource]="movies" matSort matSortActive="Title" matSortDirection="">
+<div align="center">
+    <table mat-table [dataSource]="movies" matSort matSortActive="Title" matSortDirection="" multiTemplateDataRows>
+        <!-- Index Column -->
+        <ng-container matColumnDef="Index">
+            <th mat-header-cell *matHeaderCellDef>Index</th>
+            <td mat-cell *matCellDef="let element; let i=dataIndex;">
+                {{this.paginator.pageIndex * this.paginator.pageSize+i + 1}}</td>
+        </ng-container>
+
         <!-- Title Column -->
         <ng-container matColumnDef="Title">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
-            <td mat-cell *matCellDef="let row">{{row.Title}}</td>
+            <td mat-cell *matCellDef="let element">{{element.Title}}</td>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="Genre">
+            <th mat-header-cell *matHeaderCellDef>Genre</th>
+            <td mat-cell *matCellDef="let element">{{element.Genre}}</td>
         </ng-container>
 
         <!-- Year Column -->
         <ng-container matColumnDef="Year">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Year</th>
-            <td mat-cell *matCellDef="let row">{{row.Year}}</td>
+            <td mat-cell *matCellDef="let element">{{element.Year}}</td>
         </ng-container>
 
         <!-- Actor Column -->
         <ng-container matColumnDef="Actors">
             <th mat-header-cell *matHeaderCellDef>Actor</th>
-            <td mat-cell *matCellDef="let row">{{row.Actors}}</td>
+            <td mat-cell *matCellDef="let element">
+                <div *ngFor="let a of element.Actors">
+                    <a mat-button [routerLink]="['/movie/actor', a]">{{a}}</a>
+                </div>
+            </td>
         </ng-container>
 
         <!-- Release Date Column -->
         <ng-container matColumnDef="Runtime">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Runtime</th>
-            <td mat-cell *matCellDef="let row">{{row.Runtime}}</td>
+            <th mat-header-cell *matHeaderCellDef>Runtime</th>
+            <td mat-cell *matCellDef="let element">{{element.Runtime}}</td>
         </ng-container>
 
         <!-- Actor Column -->
         <ng-container matColumnDef="imdbRating">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>IMDb Rating</th>
-            <td mat-cell *matCellDef="let row">{{row.imdbRating}}</td>
+            <td mat-cell *matCellDef="let element">{{element.imdbRating}}</td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <!-- Delete Column -->
+        <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="warn" (click)="onMovieDelete(element.imdbID)"
+                    aria-label="Example icon button with a home icon">
+                    <mat-icon><span class="material-icons-outlined">delete</span></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button aria-label="expand element"
+                    (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <!-- Expanded Column -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsWithExpand.length">
+                <div class="example-element-detail"
+                    [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+                    <div class="example-element-diagram">
+                        <div class="example-element-position">
+                            <img src="{{element.Poster}}" alt="" width="90px" height="120px">
+                        </div>
+                    </div>
+                    <div class="example-element-description">
+                        <span class="example-element-description-attribution">
+                            {{element.Plot}} </span>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsWithExpand"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumnsWithExpand;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
 
-    <mat-paginator [length]="totalLength" [pageSize]="pageSize" aria-label="Select page of GitHub search results">
+    <mat-paginator [length]="totalLength" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        [showFirstLastButtons]="true">
     </mat-paginator>
 </div>

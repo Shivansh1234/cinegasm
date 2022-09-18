@@ -14,11 +14,13 @@ function formatMovie(movie) {
     // Splitting strings to array
     const directors = movie.Director.split(', ');
     const writers = movie.Writer.split(', ');
+    const genre = movie.Genre.split(', ');
     const actors = movie.Actors.split(', ');
     const language = movie.Language.split(', ');
     const country = movie.Country.split(', ');
     movie.Director = directors;
     movie.Writer = writers;
+    movie.Genre = genre;
     movie.Actors = actors;
     movie.Language = language;
     movie.Country = country;
@@ -31,14 +33,14 @@ const addMovie = async (req, res, next) => {
     const movie = req.body;
 
     const userFilter = { _id: userId };
-    const movieMatchQuery = { movies: { $elemMatch: { imdbID: movie.imdbID } } };
-    const movieList = await User.findOne(userFilter, movieMatchQuery);
+    const movieAlreadyExistsQuery = { movies: { $elemMatch: { imdbID: movie.imdbID } } };
+    const movieList = await User.findOne(userFilter, movieAlreadyExistsQuery);
     if (movieList.movies.length === 0) {
         const movieData = formatMovie(movie);
         const movieAddQuery = { $push: { movies: { $each: [movie], $sort: { Title: 1 } } } };
         const result = await User.updateOne(userFilter, movieAddQuery);
         if (result.acknowledged) {
-            res.send(APIResponse.created(`${movieData.Title} - Movie added`, movieData));
+            res.send(APIResponse.created(`${movieData.Title} - Movie added`));
         } else {
             next(APIError.internal('Some error occured'));
         }
@@ -46,6 +48,28 @@ const addMovie = async (req, res, next) => {
         next(APIError.conflict('Movie already present'));
     }
     // const result = await User.updateOne(filter, query);
+};
+
+const deleteMovie = async (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const userId = getUserId(token);
+    const movie = req.query.movieId;
+
+    const userFilter = { _id: userId };
+    const movieMatchQuery = { movies: { $elemMatch: { imdbID: movie } } };
+    const movieList = await User.findOne(userFilter, movieMatchQuery);
+    const movieTitle = movieList.movies[0]?.Title;
+    if (movieTitle !== undefined) {
+        const movieDeleteQuery = { $pull: { movies: { imdbID: movie } } };
+        const result = await User.findOneAndUpdate(userFilter, movieDeleteQuery);
+        if (result) {
+            res.send(APIResponse.deleted(`${movieTitle} - Movie deleted`));
+        } else {
+            next(APIError.internal(`Unable to delete - ${movieTitle}`));
+        }
+    } else {
+        next(APIError.notFound('Movie not found'));
+    }
 };
 
 function sortMovies(req, movies) {
@@ -107,16 +131,19 @@ const getMovies = async (req, res, next) => {
 const getActorMovies = async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const userId = getUserId(token);
-    const actor = req.body.actor;
+    const actor = req.query.actor;
 
     const userFilter = { _id: userId };
-    const actorMatchQuery = { movies: { $elemMatch: { Actors: actor } } };
-    const actorMovieList = await User.findOne(userFilter, actorMatchQuery);
+    // const actorMatchQuery = { movies: { $elemMatch: { Actors: actor } } };
+    const actorMovieList = await User.findOne(userFilter);
+    const list = actorMovieList.movies.filter((a) => a.Actors.includes(actor));
     if (actorMovieList.movies.length) {
-        res.send(APIResponse.get('Actor movies fetched successfully', actorMovieList));
+        res.send(APIResponse.get('Actor movies fetched successfully', list));
     } else {
         next(APIError.noContent(`No movies found with actor - ${actor}`));
     }
 };
 
-module.exports = { addMovie, getMovies, getActorMovies };
+module.exports = {
+    addMovie, getMovies, getActorMovies, deleteMovie
+};

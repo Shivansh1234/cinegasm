@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMovieForm } from 'src/app/models/add-movie-form';
+import { APIResponse } from 'src/app/models/api-response';
 import { CustomError } from 'src/app/models/custom-error';
 import { AddMovieRes, Movie } from 'src/app/models/movie';
 import { SnackbarService } from 'src/app/snackbar.service';
@@ -24,7 +25,7 @@ export class AddMovieComponent {
 
 
   addMovieForm: FormGroup = this.fb.group({
-    addByName: ['', Validators.required],
+    addByName: [true, Validators.required],
     movieInput: ['', Validators.required]
   });
 
@@ -37,6 +38,10 @@ export class AddMovieComponent {
           if (addByName) {
             this.dialog.open(AddMovieDialogComponent, {
               data: movieData
+            }).afterClosed().subscribe((data: boolean) => {
+              if (data) {
+                this.onAdd(movieData);
+              }
             });
           } else {
             this.onAdd(movieData);
@@ -53,7 +58,7 @@ export class AddMovieComponent {
 
   onAdd(data: Movie): void {
     this.movieService.addMovie(data).subscribe({
-      next: (data: AddMovieRes) => {
+      next: (data: APIResponse) => {
         this.snackbarService.success(data.message, 'Ok');
       },
       error: (err: CustomError) => {

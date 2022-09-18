@@ -4,6 +4,7 @@ import { SortDirection } from '@angular/material/sort';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddMovieForm } from '../models/add-movie-form';
+import { APIResponse } from '../models/api-response';
 import { Movie, MovieRes } from '../models/movie';
 
 @Injectable({
@@ -25,19 +26,7 @@ export class MovieService {
       catchError(this.handleError)
     );
   }
-
-  addMovie(movie: Movie): Observable<any> {
-    let userToken = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + userToken
-    });
-
-    return this.http.post(`${environment.baseURL}/movie/addMovie`, movie, { headers }).pipe(
-      catchError(this.handleError)
-    );
-  }
-
+  
   getMovieList(sort: string, order: SortDirection, pageIndex: number, pageSize: number): Observable<MovieRes> {
     let userToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
@@ -48,6 +37,42 @@ export class MovieService {
     return this.http.get<MovieRes>(movieUrl, { headers }).pipe(
       catchError(this.handleError)
     )
+  }
+
+  addMovie(movie: Movie): Observable<APIResponse> {
+    let userToken = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + userToken
+    });
+
+    return this.http.post<APIResponse>(`${environment.baseURL}/movie/addMovie`, movie, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteMovie(movieId: string): Observable<APIResponse> {
+    let userToken = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + userToken
+    });
+
+    return this.http.delete<APIResponse>(`${environment.baseURL}/movie/deleteMovie?movieId=${movieId}`, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getActorMovies(actor: string): Observable<any> {
+    let userToken = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + userToken
+    });
+    const movieUrl = `${environment.baseURL}/movie/getActorMovies?actor=${actor}`;
+    return this.http.get<any>(movieUrl, { headers }).pipe(
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { AuthService } from '../auth.service';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment';
 
@@ -10,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   getUserData(): Observable<User> {
     let userToken = localStorage.getItem('token');

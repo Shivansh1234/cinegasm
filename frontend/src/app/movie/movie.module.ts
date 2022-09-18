@@ -12,20 +12,23 @@ import { AddMovieDialogComponent } from './add-movie/add-movie-dialog/add-movie-
 
 // Material imports
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { ActorMoviesComponent } from './actor-movies/actor-movies.component';
 
 @NgModule({
   declarations: [
     MovieComponent,
     MovieListComponent,
     AddMovieComponent,
-    AddMovieDialogComponent
+    AddMovieDialogComponent,
+    ActorMoviesComponent
   ],
   imports: [
     CommonModule,
@@ -34,13 +37,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 
     // Material
     MatButtonModule,
+    MatDialogModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
-    MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
     MatRadioModule,
-    MatDialogModule
+    MatSortModule,
+    MatTableModule
   ]
 })
 export class MovieModule { }
