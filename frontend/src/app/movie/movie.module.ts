@@ -20,7 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { ActorMoviesComponent } from './actor-movies/actor-movies.component';
+import { TypeMoviesComponent } from './type-movies/type-movies.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { ActorMoviesComponent } from './actor-movies/actor-movies.component';
     MovieListComponent,
     AddMovieComponent,
     AddMovieDialogComponent,
-    ActorMoviesComponent
+    TypeMoviesComponent
   ],
   imports: [
     CommonModule,

@@ -4,11 +4,11 @@ import { Movie } from 'src/app/models/movie';
 import { MovieService } from '../movie.service';
 
 @Component({
-  selector: 'app-actor-movies',
-  templateUrl: './actor-movies.component.html',
-  styleUrls: ['./actor-movies.component.css']
+  selector: 'app-type-movies',
+  templateUrl: './type-movies.component.html',
+  styleUrls: ['./type-movies.component.css']
 })
-export class ActorMoviesComponent implements OnInit {
+export class TypeMoviesComponent implements OnInit {
 
   constructor(private movieService: MovieService, private route: ActivatedRoute) { }
 

@@ -36,7 +36,7 @@ export class MovieListComponent implements AfterViewInit {
 
   // Pagination init
   pageSize: number = 5;
-  pageSizeOptions: number[] = [5, 10];
+  pageSizeOptions: number[] = [5, 10, 25, 50];
   totalLength: number = 0;
 
   constructor(private movieService: MovieService, private snackbarService: SnackbarService) { }
