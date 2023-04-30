@@ -1,10 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { merge, startWith } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { debounceTime, finalize, map, switchMap } from 'rxjs/operators';
 import { APIResponse } from 'src/app/models/api-response';
 import { CustomError } from 'src/app/models/custom-error';
 import { Movie } from 'src/app/models/movie';
@@ -25,9 +26,12 @@ import { MovieService } from '../movie.service';
 })
 export class MovieListComponent implements AfterViewInit {
   movies: Movie[] = [];
+  isLoading: boolean = true;
+
+  dataSource: MatTableDataSource<Movie> = new MatTableDataSource(this.movies);
 
   // Table init
-  displayedColumns: string[] = ['Index', 'Title', 'Director', 'Language', 'Genre', 'Year', 'Actors', 'Runtime', 'imdbRating', 'Delete'];
+  displayedColumns: string[] = ['Index', 'Poster', 'Title', 'Director', 'Language', 'Genre', 'Year', 'Actors', 'Runtime', 'imdbRating', 'Delete'];
   displayedColumnsWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement!: Movie | null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -35,28 +39,33 @@ export class MovieListComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   // Pagination init
-  pageSize: number = 5;
-  pageSizeOptions: number[] = [5, 10, 25, 50];
+  pageSize: number = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 50, 100];
   totalLength: number = 0;
+
+  // Searchbar form control
+  movieSearch = new FormControl('');
 
   constructor(private movieService: MovieService, private snackbarService: SnackbarService) { }
 
   getMovies(): void {
     this.sort.sortChange.subscribe(() => { this.paginator.pageIndex = 0 });
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(this.sort.sortChange, this.paginator.page, this.movieSearch.valueChanges)
       .pipe(
         startWith({}),
+        debounceTime(300),
         switchMap(() => {
-          return this.movieService.getMovieList(this.sort.active, this.sort.direction, this.paginator.pageIndex + 1, this.paginator.pageSize);
+          return this.movieService.getMovieList(this.sort.active, this.sort.direction, this.paginator.pageIndex + 1, this.paginator.pageSize, this.movieSearch.value);
         }),
         map(movieData => {
           this.totalLength = movieData.data.total;
           return movieData.data.movies;
         }),
+        finalize(() => this.isLoading = false)
       )
       .subscribe({
         next: (mappedData: Movie[]) => {
-          this.movies = mappedData;
+          this.dataSource.data = mappedData;
         },
         error: (err: CustomError) => {
           this.snackbarService.error(err.message, 'Ok');
@@ -82,5 +91,4 @@ export class MovieListComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.getMovies();
   }
-
 }

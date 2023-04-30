@@ -1,14 +1,9 @@
-const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const APIError = require('../config/APIError');
 const APIResponse = require('../config/APIResponse');
 // @desc Adding Movie
 // @route POST /addMovie
 // @access PRIVATE
-function getUserId(token) {
-    const decodedId = jwt.verify(token, process.env.JWT_SECRET).id;
-    return decodedId;
-}
 
 function formatMovie(movie) {
     // Splitting strings to array
@@ -28,8 +23,7 @@ function formatMovie(movie) {
 }
 
 const addMovie = async (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const userId = getUserId(token);
+    const userId = req.user._id;
     const movie = req.body;
 
     const userFilter = { _id: userId };
@@ -51,8 +45,7 @@ const addMovie = async (req, res, next) => {
 };
 
 const deleteMovie = async (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const userId = getUserId(token);
+    const userId = req.user._id;
     const movie = req.query.movieId;
 
     const userFilter = { _id: userId };
@@ -101,10 +94,14 @@ function sortMovies(req, movies) {
 }
 
 const getMovies = async (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const userId = getUserId(token);
+    const userId = req.user._id;
 
-    const userFilter = { _id: userId };
+    let userFilter = {};
+    if (req.query.search) {
+        userFilter = { _id: userId, movies: { $elemMatch: { Title: 'Alien' } } };
+    } else {
+        userFilter = { _id: userId };
+    }
     const movieGetQuery = { movies: 1, _id: 0 };
 
     const movieObj = await User.findOne(userFilter, movieGetQuery);
@@ -129,8 +126,7 @@ const getMovies = async (req, res, next) => {
 };
 
 const getListTypeMovies = async (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const userId = getUserId(token);
+    const userId = req.user._id;
     const listType = req.query.type;
     const listId = req.query.id;
 

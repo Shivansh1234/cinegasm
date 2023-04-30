@@ -5,6 +5,10 @@
         <button *ngIf="isLoggedIn | async" mat-icon-button [routerLink]="['movie']">
             <span>Movie</span>
         </button>
+        <button *ngIf="isLoggedIn | async" mat-icon-button [routerLink]="['movie', 'list']">
+            <span>Movie List</span>
+        </button>
+
         <span class="example-spacer"></span>
 
         <!-- Login mode -->

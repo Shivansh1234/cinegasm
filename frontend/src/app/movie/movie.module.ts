@@ -8,6 +8,7 @@ import { MovieRoutingModule } from './movie-routing.module';
 import { MovieComponent } from './movie.component';
 import { MovieListComponent } from './movie-list/movie-list.component';
 import { AddMovieComponent } from './add-movie/add-movie.component';
+import { TypeMoviesComponent } from './type-movies/type-movies.component';
 import { AddMovieDialogComponent } from './add-movie/add-movie-dialog/add-movie-dialog.component';
 
 // Material imports
@@ -20,7 +21,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { TypeMoviesComponent } from './type-movies/type-movies.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { TypeMoviesComponent } from './type-movies/type-movies.component';
     MatPaginatorModule,
     MatRadioModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MovieModule { }
