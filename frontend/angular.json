@@ -111,6 +111,86 @@
           }
         }
       }
+    },
+    "material-components-lib": {
+      "projectType": "library",
+      "root": "projects/material-components-lib",
+      "sourceRoot": "projects/material-components-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/material-components-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/material-components-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/material-components-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/material-components-lib/src/test.ts",
+            "tsConfig": "projects/material-components-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/material-components-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/material-components-lib/**/*.ts",
+              "projects/material-components-lib/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "custom-components-lib": {
+      "projectType": "library",
+      "root": "projects/custom-components-lib",
+      "sourceRoot": "projects/custom-components-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/custom-components-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/custom-components-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/custom-components-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/custom-components-lib/src/test.ts",
+            "tsConfig": "projects/custom-components-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/custom-components-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/custom-components-lib/**/*.ts",
+              "projects/custom-components-lib/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "frontend",

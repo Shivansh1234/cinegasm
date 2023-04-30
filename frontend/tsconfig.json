@@ -9,6 +9,16 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
+    "paths": {
+      "custom-components-lib": [
+        "dist/custom-components-lib/custom-components-lib",
+        "dist/custom-components-lib"
+      ],
+      "material-components-lib": [
+        "dist/material-components-lib/material-components-lib",
+        "dist/material-components-lib"
+      ]
+    },
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
