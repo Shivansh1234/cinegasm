@@ -1,1 +1,8 @@
-<p>pagination works!</p>
+<mat-paginator #paginator
+    [length]="pageConfig.totalCount"
+    [pageSize]="pageConfig.pageSize"
+    [showFirstLastButtons]="showFirstLastButtons"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageIndex]="pageConfig.pageIndex"
+    (page)="handlePageEvent($event)">
+</mat-paginator>
