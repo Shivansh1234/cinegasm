@@ -1,14 +1,10 @@
 <div align="center">
-    <lib-grid *ngIf="movies.length > 0"
-        [gridColumns]="movieColumns"
-        [gridData]="movies"
-        [pageConfig]="pageConfig"
-        [isLoading]="isLoading"
-        [isSelectionEnabled]="false"
-        [isExpandableRowEnabled]="false"
-        [pageSizeOptions]="pageSizeOptions"
-        (pageChange)="onPageChange($event)"
-        (sortChange)="onSortChange($event)"
-        (rowSelectionChange)="onRowSelection($event)"
-    ></lib-grid>
+    <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input type="text" matInput [formControl]="movieSearch">
+    </mat-form-field>
+    <lib-grid *ngIf="movies.length > 0" [gridColumns]="movieColumns" [gridData]="movies" [pageConfig]="pageConfig"
+        [isLoading]="isLoading" [isSelectionEnabled]="false" [isExpandableRowEnabled]="false"
+        [pageSizeOptions]="pageSizeOptions" (pageChange)="onPageChange($event)" (sortChange)="onSortChange($event)"
+        (rowSelectionChange)="onRowSelection($event)"></lib-grid>
 </div>

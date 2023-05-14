@@ -96,15 +96,14 @@ function sortMovies(req, movies) {
 const getMovies = async (req, res, next) => {
     const userId = req.user._id;
 
-    let userFilter = {};
+    const userFilter = { _id: userId };
+    let movieObj = {};
     if (req.query.search) {
-        userFilter = { _id: userId, movies: { $elemMatch: { Title: 'Alien' } } };
+        const movieGetQuery = { movies: { $elemMatch: { Title: new RegExp(req.query.search, 'i') } } };
+        movieObj = await User.findOne(userFilter, movieGetQuery);
     } else {
-        userFilter = { _id: userId };
+        movieObj = await User.findOne(userFilter);
     }
-    const movieGetQuery = { movies: 1, _id: 0 };
-
-    const movieObj = await User.findOne(userFilter, movieGetQuery);
     const sortedMovies = sortMovies(req, movieObj.movies);
 
     if (sortedMovies.length === 0) {
@@ -113,7 +112,7 @@ const getMovies = async (req, res, next) => {
         const pageIndex = parseInt(req.query.pageIndex, 10);
         const pageSize = parseInt(req.query.pageSize, 10);
         const first = pageSize * (pageIndex - 1);
-        const last = first + pageSize;
+        const last = pageSize * pageIndex;
         const movieList = sortedMovies.slice(first, last);
         const movieResp = {
             movies: movieList,

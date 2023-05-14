@@ -53,6 +53,7 @@ export class MovieListComponent implements AfterViewInit {
 
   // Searchbar form control
   movieSearch = new FormControl('');
+  searchVal: string = '';
 
   constructor(
     private movieService: MovieService,
@@ -60,12 +61,22 @@ export class MovieListComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
+    this.movieSearch.valueChanges
+    .pipe(
+      debounceTime(500)
+    )
+    .subscribe((input: string) => {
+      this.searchVal = input;
+      this.pageConfig.pageIndex = 0;
+      this.pageConfig.pageSize = 10;
+      this.getMovies();
+    });
     this.getMovies();
   }
 
   getMovies(): void {
     this.isLoading = true;
-    this.movieService.getMovieList(this.sortConfig.active, this.sortConfig.direction, this.pageConfig.pageIndex + 1, this.pageConfig.pageSize, this.movieSearch.value)
+    this.movieService.getMovieList(this.sortConfig.active, this.sortConfig.direction, this.pageConfig.pageIndex + 1, this.pageConfig.pageSize, this.searchVal)
       .pipe(
         debounceTime(300),
         finalize(() => this.isLoading = false)
