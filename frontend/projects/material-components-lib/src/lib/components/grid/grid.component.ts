@@ -25,6 +25,7 @@ export class GridComponent implements OnInit {
   @Input() isSelectionEnabled: boolean = false;
   @Input() isIndexEnabled: boolean = true;
   @Input() isExpandableRowEnabled: boolean = false;
+  @Input() expandableRowContentColumn: string = '';
   @Input() showFirstLastButtons: boolean = true;
   @Input() pageSizeOptions: number[] = [5, 10, 25, 50, 100];
   @Input() pageConfig: PageConfig = {

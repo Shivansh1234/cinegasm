@@ -34,6 +34,7 @@ export class MovieListComponent implements AfterViewInit {
     { name: 'Released', header: 'Released Date', type: 'string', sortable: false },
     { name: 'imdbRating', header: 'IMDb', type: 'string', sortable: true },
   ];
+  expandableRowColumnName: string = 'Plot';
 
   // Pagination init
   pageSize: number = 10;
