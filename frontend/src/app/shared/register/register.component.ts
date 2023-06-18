@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CustomError } from '../../models/custom-error';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { RegisterForm } from '../../models/register-form';
@@ -14,10 +14,10 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private sharedService: SharedService, private snackbarService: SnackbarService,
+  constructor(private fb: UntypedFormBuilder, private sharedService: SharedService, private snackbarService: SnackbarService,
     private router: Router) { }
 
-  registerForm: FormGroup = this.fb.group({
+  registerForm: UntypedFormGroup = this.fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required]
   });
