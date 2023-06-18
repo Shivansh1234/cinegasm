@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMovieForm } from 'src/app/models/add-movie-form';
 import { APIResponse } from 'src/app/models/api-response';
 import { CustomError } from 'src/app/models/custom-error';
-import { AddMovieRes, Movie } from 'src/app/models/movie';
+import { Movie } from 'src/app/models/movie';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { MovieService } from '../movie.service';
 import { AddMovieDialogComponent } from './add-movie-dialog/add-movie-dialog.component';
@@ -22,7 +22,6 @@ export class AddMovieComponent {
     private dialog: MatDialog,
     private fb: FormBuilder
   ) { }
-
 
   addMovieForm: FormGroup = this.fb.group({
     addByName: [true, Validators.required],

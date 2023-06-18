@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { MaterialComponentsLibModule } from 'material-components-lib';
+
 import { MovieRoutingModule } from './movie-routing.module';
 
 // Component imports
@@ -22,7 +24,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MaterialComponentsLibModule } from 'material-components-lib';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,9 @@ import { MaterialComponentsLibModule } from 'material-components-lib';
     MatRadioModule,
     MatSortModule,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatToolbarModule
   ]
 })
 export class MovieModule { }

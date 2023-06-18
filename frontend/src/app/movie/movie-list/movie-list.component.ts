@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, finalize } from 'rxjs/operators';
-import { PageConfig, ColumnConfig, SelectionConfig } from 'material-components-lib';
+import { PageConfig, ColumnConfig, SelectionConfig, ActionData, ActionConfig } from 'material-components-lib';
 import { Sort } from '@angular/material/sort';
 
 import { APIResponse } from 'src/app/models/api-response';
@@ -10,6 +10,7 @@ import { CustomError } from 'src/app/models/custom-error';
 import { Movie, MovieRes } from 'src/app/models/movie';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { MovieService } from '../movie.service';
+import { defaultPageSize, defaultPageOptions } from '../movie.constant';
 
 @Component({
   selector: 'app-movie-list',
@@ -26,6 +27,7 @@ import { MovieService } from '../movie.service';
 export class MovieListComponent implements AfterViewInit {
   movies: Movie[] = [];
   isLoading: boolean = true;
+  isPanelOpenState: boolean = false;
 
   // Table init
   movieColumns: ColumnConfig[] = [
@@ -34,16 +36,20 @@ export class MovieListComponent implements AfterViewInit {
     { name: 'Released', header: 'Released Date', type: 'string', sortable: false },
     { name: 'imdbRating', header: 'IMDb', type: 'string', sortable: true },
   ];
+  movieActions: ActionConfig[] = [
+    { name: 'delete', title: 'Delete', icon: 'delete', isGroupAction: true },
+    { name: 'info', title: 'More Info', icon: 'info', isGroupAction: false }
+  ];
   expandableRowColumnName: string = 'Plot';
 
   // Pagination init
-  pageSize: number = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 50, 100];
+  pageSize: number = defaultPageSize;
+  pageSizeOptions: number[] = defaultPageOptions;
   totalLength: number = 0;
 
   pageConfig: PageConfig = {
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: defaultPageSize,
     totalCount: 0
   };
 
@@ -63,15 +69,15 @@ export class MovieListComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.movieSearch.valueChanges
-    .pipe(
-      debounceTime(500)
-    )
-    .subscribe((input: string) => {
-      this.searchVal = input;
-      this.pageConfig.pageIndex = 0;
-      this.pageConfig.pageSize = 10;
-      this.getMovies();
-    });
+      .pipe(
+        debounceTime(500)
+      )
+      .subscribe((input: string) => {
+        this.searchVal = input;
+        this.pageConfig.pageIndex = 0;
+        this.pageConfig.pageSize = 10;
+        this.getMovies();
+      });
     this.getMovies();
   }
 
@@ -104,8 +110,12 @@ export class MovieListComponent implements AfterViewInit {
     this.getMovies();
   }
 
-  onRowSelection(event: SelectionConfig): void {
-    console.log(event);
+  OnActionSelect(actionEvent: ActionData): void {
+    console.log(actionEvent);
+  }
+
+  onRowSelection(selectionEvent: SelectionConfig): void {
+    console.log(selectionEvent);
   }
 
   onMovieDelete(imdbId: string): void {

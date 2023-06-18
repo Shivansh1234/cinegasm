@@ -1,10 +1,5 @@
 import { APIResponse } from "./api-response";
 
-interface Rating {
-    Source: string;
-    Value: string;
-}
-
 export interface Movie {
     Title: string;
     Year: string;
@@ -31,6 +26,11 @@ export interface Movie {
     Production: string;
     Website: string;
     Response: string;
+}
+
+interface Rating {
+    Source: string;
+    Value: string;
 }
 
 export interface MovieRes extends APIResponse {

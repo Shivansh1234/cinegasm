@@ -8,6 +8,4 @@ export * from './lib/material-components-lib.module';
 
 export { GridComponent } from './lib/components/grid/grid.component';
 export { PaginationComponent } from './lib/components/pagination/pagination.component';
-export { PageConfig } from './lib/material-components-lib';
-export { ColumnConfig } from './lib/material-components-lib';
-export { SelectionConfig } from './lib/material-components-lib';
+export { PageConfig, ColumnConfig, SelectionConfig, ActionConfig, ActionData } from './lib/material-components-lib';

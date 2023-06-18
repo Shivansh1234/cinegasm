@@ -4,6 +4,13 @@ export interface PageConfig {
     totalCount: number;
 }
 
+export interface ActionConfig {
+    name: string;
+    title: string;
+    icon?: string;
+    isGroupAction: boolean;
+}
+
 export interface ColumnConfig {
     name: string;
     header: string;
@@ -14,4 +21,9 @@ export interface ColumnConfig {
 export interface SelectionConfig {
     rows: any[];
     isChecked: boolean;
+}
+
+export interface ActionData {
+    name: string;
+    value: any[];
 }

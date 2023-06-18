@@ -1,19 +1,17 @@
 <div [formGroup]="addMovieForm" align="center">
     <p>
-        <label>Add by</label>
         <mat-radio-group formControlName="addByName">
             <mat-radio-button [value]="true">Search</mat-radio-button>&nbsp;
             <mat-radio-button [value]="false">IMDb ID</mat-radio-button>
         </mat-radio-group>
     </p>
     <p>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
             <mat-label>Movie ID/Name</mat-label>
             <input matInput formControlName="movieInput">
         </mat-form-field>
     </p>
-
     <p>
-        <button mat-button (click)="onAddMovie()" [disabled]="addMovieForm.invalid">Add</button>
+        <button mat-button (click)="onAddMovie()" [disabled]="addMovieForm.invalid">Add Movie</button>
     </p>
 </div>

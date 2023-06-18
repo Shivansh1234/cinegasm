@@ -1,11 +1,25 @@
 <div align="center">
+    <mat-accordion>
+        <mat-expansion-panel (opened)="isPanelOpenState = true" (closed)="isPanelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>add</mat-icon>Add Movie
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-add-movie></app-add-movie>
+        </mat-expansion-panel>
+    </mat-accordion>
+
     <mat-form-field>
         <mat-label>Search</mat-label>
         <input type="text" matInput [formControl]="movieSearch">
     </mat-form-field>
     <lib-grid *ngIf="movies.length > 0" [gridColumns]="movieColumns" [gridData]="movies" [pageConfig]="pageConfig"
-        [isLoading]="isLoading" [isSelectionEnabled]="false" [isExpandableRowEnabled]="true"
+        [isLoading]="isLoading" [isSelectionEnabled]="false" [gridName]="'Movie List'" [isExpandableRowEnabled]="true"
         [expandableRowContentColumn]="expandableRowColumnName" [pageSizeOptions]="pageSizeOptions"
+        [isSelectionEnabled]="true" [gridActions]="movieActions"
         (pageChange)="onPageChange($event)" (sortChange)="onSortChange($event)"
-        (rowSelectionChange)="onRowSelection($event)"></lib-grid>
+        (rowSelectionChange)="onRowSelection($event)" (actionSelect)="OnActionSelect($event)"></lib-grid>
 </div>
