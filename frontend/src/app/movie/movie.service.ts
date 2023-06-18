@@ -5,29 +5,30 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddMovieForm } from '../models/add-movie-form';
 import { APIResponse } from '../models/api-response';
-import { Movie, MovieRes } from '../models/movie';
+import { GetMovieBy, Movie, MovieRes } from '../models/movie';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
 
+  GetMovieBy = GetMovieBy;
   constructor(private http: HttpClient) { }
 
-  getMovieInfo(addMovieFormData: AddMovieForm): Observable<Movie> {
+  getMovieInfoRequest(addMovieFormData: AddMovieForm): Observable<Movie> {
     const movieInput = addMovieFormData.movieInput;
-    const addByName = addMovieFormData.addByName;
-    if (addByName) {
+    const getMovieBy = addMovieFormData.getMovieBy;
+    if (getMovieBy === GetMovieBy.Name) {
       return this.http.get<Movie>(`http://www.omdbapi.com/?t=${movieInput}&apikey=1d5460ac`).pipe(
       catchError(this.handleError)
     );
     }
-    return this.http.get<Movie>(`http://www.omdbapi.com/?i=${movieInput}&apikey=1d5460ac`).pipe(
+    return this.http.get<Movie>(`http://www.omdbapi.com/?i=${movieInput}&plot=full&apikey=1d5460ac`).pipe(
       catchError(this.handleError)
     );
   }
   
-  getMovieList(sort: string, order: SortDirection, pageIndex: number, pageSize: number, search: string): Observable<MovieRes> {
+  getMovieListRequest(sort: string, order: SortDirection, pageIndex: number, pageSize: number, search: string): Observable<MovieRes> {
     let userToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -39,7 +40,7 @@ export class MovieService {
     )
   }
 
-  addMovie(movie: Movie): Observable<APIResponse> {
+  addMovieRequest(movie: Movie): Observable<APIResponse> {
     let userToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -51,7 +52,7 @@ export class MovieService {
     );
   }
 
-  deleteMovie(movieId: string): Observable<APIResponse> {
+  deleteMovieRequest(movieId: string): Observable<APIResponse> {
     let userToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ export class MovieService {
     );
   }
 
-  getListMovies(type: string, id: string): Observable<any> {
+  getListMoviesRequest(type: string, id: string): Observable<any> {
     let userToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

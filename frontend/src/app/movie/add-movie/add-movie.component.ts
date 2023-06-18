@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddMovieForm } from 'src/app/models/add-movie-form';
 import { APIResponse } from 'src/app/models/api-response';
 import { CustomError } from 'src/app/models/custom-error';
-import { Movie } from 'src/app/models/movie';
+import { GetMovieBy, Movie } from 'src/app/models/movie';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { MovieService } from '../movie.service';
 import { AddMovieDialogComponent } from './add-movie-dialog/add-movie-dialog.component';
@@ -16,6 +16,7 @@ import { AddMovieDialogComponent } from './add-movie-dialog/add-movie-dialog.com
 })
 export class AddMovieComponent {
 
+  GetMovieBy = GetMovieBy;
   constructor(
     private movieService: MovieService,
     private snackbarService: SnackbarService,
@@ -24,17 +25,17 @@ export class AddMovieComponent {
   ) { }
 
   addMovieForm: FormGroup = this.fb.group({
-    addByName: [true, Validators.required],
+    addByName: [GetMovieBy.Name, Validators.required],
     movieInput: ['', Validators.required]
   });
 
   onAddMovie(): void {
     const addMovieFormData: AddMovieForm = this.addMovieForm.value;
-    this.movieService.getMovieInfo(addMovieFormData).subscribe({
+    this.movieService.getMovieInfoRequest(addMovieFormData).subscribe({
       next: (movieData: Movie) => {
         if (movieData.Response === 'True') {
-          const addByName: boolean = addMovieFormData.addByName;
-          if (addByName) {
+          const getMovieBy: string = addMovieFormData.getMovieBy;
+          if (getMovieBy === GetMovieBy.Name) {
             this.dialog.open(AddMovieDialogComponent, {
               data: movieData
             }).afterClosed().subscribe((data: boolean) => {
@@ -56,7 +57,7 @@ export class AddMovieComponent {
   }
 
   onAdd(data: Movie): void {
-    this.movieService.addMovie(data).subscribe({
+    this.movieService.addMovieRequest(data).subscribe({
       next: (data: APIResponse) => {
         this.snackbarService.success(data.message, 'Ok');
       },

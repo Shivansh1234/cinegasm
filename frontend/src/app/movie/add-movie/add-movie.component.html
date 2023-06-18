@@ -1,7 +1,7 @@
 <div [formGroup]="addMovieForm" align="center">
     <p>
         <mat-radio-group formControlName="addByName">
-            <mat-radio-button [value]="true">Search</mat-radio-button>&nbsp;
+            <mat-radio-button [value]="GetMovieBy.Name">Search</mat-radio-button>&nbsp;
             <mat-radio-button [value]="false">IMDb ID</mat-radio-button>
         </mat-radio-group>
     </p>

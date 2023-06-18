@@ -11,6 +11,7 @@ import { Movie, MovieRes } from 'src/app/models/movie';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { MovieService } from '../movie.service';
 import { defaultPageSize, defaultPageOptions } from '../movie.constant';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
@@ -64,7 +65,9 @@ export class MovieListComponent implements AfterViewInit {
 
   constructor(
     private movieService: MovieService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngAfterViewInit(): void {
@@ -83,7 +86,7 @@ export class MovieListComponent implements AfterViewInit {
 
   getMovies(): void {
     this.isLoading = true;
-    this.movieService.getMovieList(this.sortConfig.active, this.sortConfig.direction, this.pageConfig.pageIndex + 1, this.pageConfig.pageSize, this.searchVal)
+    this.movieService.getMovieListRequest(this.sortConfig.active, this.sortConfig.direction, this.pageConfig.pageIndex + 1, this.pageConfig.pageSize, this.searchVal)
       .pipe(
         debounceTime(300),
         finalize(() => this.isLoading = false)
@@ -111,15 +114,19 @@ export class MovieListComponent implements AfterViewInit {
   }
 
   OnActionSelect(actionEvent: ActionData): void {
-    console.log(actionEvent);
+    if (actionEvent.name === 'info') {
+      this.goToMovieInfo(actionEvent.value[0].imdbID);
+    }
   }
 
   onRowSelection(selectionEvent: SelectionConfig): void {
     console.log(selectionEvent);
   }
 
+
+  // Actions
   onMovieDelete(imdbId: string): void {
-    this.movieService.deleteMovie(imdbId)
+    this.movieService.deleteMovieRequest(imdbId)
       .subscribe({
         next: (deleteData: APIResponse) => {
           const index = this.movies.findIndex(m => m.imdbID === imdbId);
@@ -132,5 +139,9 @@ export class MovieListComponent implements AfterViewInit {
           this.snackbarService.error(err.message, 'Ok');
         }
       });
+  }
+
+  goToMovieInfo(movieId: string): void {
+    this.router.navigate([`${movieId}`], {relativeTo: this.route});
   }
 }

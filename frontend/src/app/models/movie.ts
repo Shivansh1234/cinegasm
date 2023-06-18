@@ -1,5 +1,6 @@
 import { APIResponse } from "./api-response";
 
+// INTERFACES
 export interface Movie {
     Title: string;
     Year: string;
@@ -49,4 +50,11 @@ export interface AddMovieRes extends APIResponse {
 export interface FailedMovieRes {
     Response: string;
     Error: string;
+}
+
+
+// ENUMS
+export enum GetMovieBy {
+    Name = 'name',
+    IMDbId = 'imdb'
 }

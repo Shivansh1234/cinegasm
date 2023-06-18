@@ -12,6 +12,7 @@ import { MovieListComponent } from './movie-list/movie-list.component';
 import { AddMovieComponent } from './add-movie/add-movie.component';
 import { TypeMoviesComponent } from './type-movies/type-movies.component';
 import { AddMovieDialogComponent } from './add-movie/add-movie-dialog/add-movie-dialog.component';
+import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 
 // Material imports
 import { MatButtonModule } from '@angular/material/button';
@@ -26,6 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MovieListComponent,
     AddMovieComponent,
     AddMovieDialogComponent,
-    TypeMoviesComponent
+    TypeMoviesComponent,
+    MovieDetailComponent
   ],
   imports: [
     CommonModule,
@@ -43,6 +46,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
     // Material
     MatButtonModule,
+    MatCardModule,
     MatDialogModule,
     MatFormFieldModule,
     MatIconModule,

@@ -1,0 +1,16 @@
+<ng-container *ngIf="movie$ | async as movie">
+    {{movie | json}}
+    <mat-card>
+        <mat-card-header><h1>{{movie.Title | uppercase}}</h1></mat-card-header>
+        <mat-card-content>
+            <div class="movie-card-flex">
+                <div>
+                    {{movie.Poster}}
+                    {{movie.Ratings}}
+                    {{movie.Runtime}}
+                    {{movie.Genre}}
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</ng-container>
