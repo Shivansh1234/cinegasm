@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMovieForm } from 'src/app/models/add-movie-form';
 import { APIResponse } from 'src/app/models/api-response';
@@ -21,10 +21,10 @@ export class AddMovieComponent {
     private movieService: MovieService,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
-  addMovieForm: FormGroup = this.fb.group({
+  addMovieForm: UntypedFormGroup = this.fb.group({
     addByName: [GetMovieBy.Name, Validators.required],
     movieInput: ['', Validators.required]
   });

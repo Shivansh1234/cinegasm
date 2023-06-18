@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { debounceTime, finalize } from 'rxjs/operators';
 import { PageConfig, ColumnConfig, SelectionConfig, ActionData, ActionConfig } from 'material-components-lib';
 import { Sort } from '@angular/material/sort';
@@ -60,7 +60,7 @@ export class MovieListComponent implements AfterViewInit {
   };
 
   // Searchbar form control
-  movieSearch = new FormControl('');
+  movieSearch = new UntypedFormControl('');
   searchVal: string = '';
 
   constructor(

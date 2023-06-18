@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomError } from 'src/app/models/custom-error';
 import { AuthService } from '../../auth.service';
@@ -14,7 +14,7 @@ import { LoginRes } from 'src/app/models/login';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router,
+  constructor(private fb: UntypedFormBuilder, private authService: AuthService, private router: Router,
     private snackbarService: SnackbarService) { }
 
   loginForm = this.fb.group({
