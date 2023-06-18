@@ -5,7 +5,7 @@ import { Movie } from 'src/app/models/movie';
 @Component({
   selector: 'app-add-movie-dialog',
   templateUrl: './add-movie-dialog.component.html',
-  styleUrls: ['./add-movie-dialog.component.css']
+  styleUrls: ['./add-movie-dialog.component.scss']
 })
 export class AddMovieDialogComponent {
 

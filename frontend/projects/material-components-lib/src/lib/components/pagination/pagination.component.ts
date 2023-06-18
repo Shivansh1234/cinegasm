@@ -5,7 +5,7 @@ import { PageConfig } from '../../material-components-lib';
 @Component({
   selector: 'lib-pagination',
   templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.css']
+  styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent {
 

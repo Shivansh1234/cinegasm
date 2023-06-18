@@ -16,7 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-movie-list',
   templateUrl: './movie-list.component.html',
-  styleUrls: ['./movie-list.component.css'],
+  styleUrls: ['./movie-list.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),

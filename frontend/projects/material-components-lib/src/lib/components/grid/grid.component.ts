@@ -7,7 +7,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 @Component({
   selector: 'lib-grid',
   templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.css'],
+  styleUrls: ['./grid.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),

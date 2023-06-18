@@ -12,7 +12,7 @@ import { AddMovieDialogComponent } from './add-movie-dialog/add-movie-dialog.com
 @Component({
   selector: 'app-add-movie',
   templateUrl: './add-movie.component.html',
-  styleUrls: ['./add-movie.component.css']
+  styleUrls: ['./add-movie.component.scss']
 })
 export class AddMovieComponent {
 
