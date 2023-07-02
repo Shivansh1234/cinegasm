@@ -19,15 +19,15 @@ export class MovieService {
     const movieInput = addMovieFormData.movieInput;
     const getMovieBy = addMovieFormData.getMovieBy;
     if (getMovieBy === GetMovieBy.Name) {
-      return this.http.get<Movie>(`http://www.omdbapi.com/?t=${movieInput}&apikey=1d5460ac`).pipe(
-      catchError(this.handleError)
-    );
+      return this.http.get<Movie>(`http://www.omdbapi.com/?t=${movieInput}&apikey=${environment.apiURL}`).pipe(
+        catchError(this.handleError)
+      );
     }
-    return this.http.get<Movie>(`http://www.omdbapi.com/?i=${movieInput}&plot=full&apikey=1d5460ac`).pipe(
+    return this.http.get<Movie>(`http://www.omdbapi.com/?i=${movieInput}&plot=full&apikey=${environment.apiURL}`).pipe(
       catchError(this.handleError)
     );
   }
-  
+
   getMovieListRequest(sort: string, order: SortDirection, pageIndex: number, pageSize: number, search: string): Observable<MovieRes> {
     let userToken = localStorage.getItem('token');
     const headers = new HttpHeaders({

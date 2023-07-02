@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { debounceTime, finalize } from 'rxjs/operators';
 import { PageConfig, ColumnConfig, SelectionConfig, ActionData, ActionConfig } from 'material-components-lib';
 import { Sort } from '@angular/material/sort';
@@ -60,7 +60,7 @@ export class MovieListComponent implements AfterViewInit {
   };
 
   // Searchbar form control
-  movieSearch = new UntypedFormControl('');
+  movieSearch = new FormControl('', { nonNullable: true });
   searchVal: string = '';
 
   constructor(
@@ -142,6 +142,6 @@ export class MovieListComponent implements AfterViewInit {
   }
 
   goToMovieInfo(movieId: string): void {
-    this.router.navigate([`${movieId}`], {relativeTo: this.route});
+    this.router.navigate([`${movieId}`], { relativeTo: this.route });
   }
 }

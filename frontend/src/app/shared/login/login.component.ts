@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomError } from 'src/app/models/custom-error';
 import { AuthService } from '../../auth.service';
@@ -14,16 +14,16 @@ import { LoginRes } from 'src/app/models/login';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: UntypedFormBuilder, private authService: AuthService, private router: Router,
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router,
     private snackbarService: SnackbarService) { }
 
-  loginForm = this.fb.group({
+  loginForm = this.fb.nonNullable.group({
     username: ['', Validators.required],
     password: ['', Validators.required]
   });
 
   onLogin(): void {
-    const loginFormData: LoginForm = this.loginForm.value;
+    const loginFormData: LoginForm = this.loginForm.getRawValue();
 
     this.authService.login(loginFormData).subscribe({
       next: (loginData: LoginRes) => {
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         if (localStorage.getItem('token')) {
           this.router.navigate(['movie']);
         } else {
-          console.log('please authenticate first');
+          this.snackbarService.error(`Authentication Failed`, `Ok`);
         }
       },
       error: (err: CustomError) => {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMovieForm } from 'src/app/models/add-movie-form';
 import { APIResponse } from 'src/app/models/api-response';
@@ -21,16 +21,16 @@ export class AddMovieComponent {
     private movieService: MovieService,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
-    private fb: UntypedFormBuilder
+    private fb: FormBuilder
   ) { }
 
-  addMovieForm: UntypedFormGroup = this.fb.group({
-    addByName: [GetMovieBy.Name, Validators.required],
+  addMovieForm = this.fb.nonNullable.group({
+    getMovieBy: [GetMovieBy.Name, Validators.required],
     movieInput: ['', Validators.required]
   });
 
   onAddMovie(): void {
-    const addMovieFormData: AddMovieForm = this.addMovieForm.value;
+    const addMovieFormData: AddMovieForm = this.addMovieForm.getRawValue();
     this.movieService.getMovieInfoRequest(addMovieFormData).subscribe({
       next: (movieData: Movie) => {
         if (movieData.Response === 'True') {
