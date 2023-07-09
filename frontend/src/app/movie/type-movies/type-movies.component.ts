@@ -19,7 +19,7 @@ export class TypeMoviesComponent implements OnInit {
   getListTypeMovies(listType: string, listId: string): void {
     this.movieService.getListMoviesRequest(listType, listId).subscribe((data) => {
       this.listTypeMovies = data.data;
-    })
+    });
   }
 
   ngOnInit(): void {

@@ -7,7 +7,7 @@ import { Sort } from '@angular/material/sort';
 
 import { APIResponse } from 'src/app/models/api-response';
 import { CustomError } from 'src/app/models/custom-error';
-import { Movie, MovieRes } from 'src/app/models/movie';
+import { Movie, MovieListRes } from 'src/app/models/movie';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { MovieService } from '../movie.service';
 import { defaultPageSize, defaultPageOptions } from '../movie.constant';
@@ -38,8 +38,8 @@ export class MovieListComponent implements AfterViewInit {
     { name: 'imdbRating', header: 'IMDb', type: 'string', sortable: true },
   ];
   movieActions: ActionConfig[] = [
-    { name: 'delete', title: 'Delete', icon: 'delete', isGroupAction: true },
-    { name: 'info', title: 'More Info', icon: 'info', isGroupAction: false }
+    { name: 'info', title: 'More Info', icon: 'info', isGroupAction: false },
+    { name: 'delete', title: 'Delete', icon: 'delete', isGroupAction: true }
   ];
   expandableRowColumnName: string = 'Plot';
 
@@ -78,7 +78,7 @@ export class MovieListComponent implements AfterViewInit {
       .subscribe((input: string) => {
         this.searchVal = input;
         this.pageConfig.pageIndex = 0;
-        this.pageConfig.pageSize = 10;
+        this.pageConfig.pageSize = defaultPageSize;
         this.getMovies();
       });
     this.getMovies();
@@ -92,7 +92,7 @@ export class MovieListComponent implements AfterViewInit {
         finalize(() => this.isLoading = false)
       )
       .subscribe({
-        next: (mappedData: MovieRes) => {
+        next: (mappedData: MovieListRes) => {
           this.movies = mappedData.data.movies;
           this.pageConfig.totalCount = mappedData.data.total;
         },

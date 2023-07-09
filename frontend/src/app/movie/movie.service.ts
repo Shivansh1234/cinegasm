@@ -5,7 +5,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddMovieForm } from '../models/add-movie-form';
 import { APIResponse } from '../models/api-response';
-import { GetMovieBy, Movie, MovieRes } from '../models/movie';
+import { GetMovieBy, Movie, MovieListRes, MovieRes } from '../models/movie';
 
 @Injectable({
   providedIn: 'root'
@@ -28,16 +28,27 @@ export class MovieService {
     );
   }
 
-  getMovieListRequest(sort: string, order: SortDirection, pageIndex: number, pageSize: number, search: string): Observable<MovieRes> {
+  getMovieDetailRequest(movieId: string): Observable<MovieRes> {
+    let userToken = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + userToken
+    });
+    return this.http.get<MovieRes>(`${environment.baseURL}/movie/getMovieDetails?movieId=${movieId}`, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getMovieListRequest(sort: string, order: SortDirection, pageIndex: number, pageSize: number, search: string): Observable<MovieListRes> {
     let userToken = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + userToken
     });
     const movieUrl = `${environment.baseURL}/movie/getMovies?sort=${sort}&order=${order}&pageIndex=${pageIndex}&pageSize=${pageSize}&search=${search}`;
-    return this.http.get<MovieRes>(movieUrl, { headers }).pipe(
+    return this.http.get<MovieListRes>(movieUrl, { headers }).pipe(
       catchError(this.handleError)
-    )
+    );
   }
 
   addMovieRequest(movie: Movie): Observable<APIResponse> {

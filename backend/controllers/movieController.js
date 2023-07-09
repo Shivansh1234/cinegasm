@@ -44,6 +44,20 @@ const addMovie = async (req, res, next) => {
     // const result = await User.updateOne(filter, query);
 };
 
+const getMovieDetails = async (req, res, next) => {
+    const userId = req.user._id;
+    const movieId = req.query.movieId;
+
+    const userFilter = { _id: userId };
+    const movieDetails = { movies: { $elemMatch: { imdbID: movieId } } };
+    const movieData = await User.findOne(userFilter, movieDetails);
+    if (movieData.movies.length >= 1) {
+        res.send(APIResponse.get('Movie Data fetched', movieData.movies[0]));
+    } else {
+        next(APIError.notFound('Movie not found'));
+    }
+};
+
 const deleteMovie = async (req, res, next) => {
     const userId = req.user._id;
     const movie = req.query.movieId;
@@ -141,5 +155,5 @@ const getListTypeMovies = async (req, res, next) => {
 };
 
 module.exports = {
-    addMovie, getMovies, getListTypeMovies, deleteMovie
+    addMovie, getMovies, getListTypeMovies, deleteMovie, getMovieDetails
 };

@@ -1,19 +1,56 @@
-<ng-container *ngIf="movie$ | async as movie">
-    {{movie | json}}
+<ng-container *ngIf="movie$ | async as movie; else loading">
     <mat-card appearance="outlined">
         <mat-card-header>
+            <h2>{{movie.Runtime}}</h2>
+            <span class="flex_gap"></span>
             <h1>{{movie.Title | uppercase}}</h1>
+            <span class="flex_gap"></span>
+            <h2>{{movie.Year}}</h2>
         </mat-card-header>
         <mat-card-content>
             <div class="movie-card-flex">
                 <div class="movie-card-flex__top">
-                    <div>
+                    <div class="movie-card-flex__top__poster">
                         <img [attr.src]="movie.Poster">
                     </div>
-                    <div>
-                        {{movie.Ratings | json}}
-                        {{movie.Runtime | json}}
-                        {{movie.Genre | json}}
+                    <div class="movie-card-flex__top__details">
+                        <div class="movie-card-flex__top__details__genre_rating">
+                            <div>
+                                <h2>Genre</h2>
+                                <mat-chip-listbox class="mat-mdc-chip-set-stacked">
+                                    <mat-chip *ngFor="let genre of movie.Genre" (click)="getMoviesBy('Genre', genre)">{{genre}}</mat-chip>
+                                </mat-chip-listbox>
+                            </div>
+                            <div>
+                                <h2>Ratings</h2>
+                                <li *ngFor="let rating of movie.Ratings">
+                                    <span>{{rating.Source}}</span>
+                                    <span>{{rating.Value}}</span>
+                                </li>
+                            </div>
+                        </div>
+                        <div>
+                            <mat-tab-group>
+                                <mat-tab label="Cast & Crew">
+                                    <mat-label>Actors</mat-label>
+                                    <mat-chip-listbox>
+                                        <mat-chip *ngFor="let actor of movie.Actors" (click)="getMoviesBy('Actors', actor)">{{actor}}</mat-chip>
+                                    </mat-chip-listbox>
+                                    <mat-divider></mat-divider>
+                                    <mat-label>Director</mat-label>
+                                    <mat-chip-listbox>
+                                        <mat-chip *ngFor="let director of movie.Director" (click)="getMoviesBy('Director', director)">{{director}}</mat-chip>
+                                    </mat-chip-listbox>
+                                    <mat-divider></mat-divider>
+                                    <mat-label>Writer</mat-label>
+                                    <mat-chip-listbox>
+                                        <mat-chip *ngFor="let writer of movie.Writer" (click)="getMoviesBy('Writer', writer)">{{writer}}</mat-chip>
+                                    </mat-chip-listbox>
+                                </mat-tab>
+                                <mat-tab label="Awards">{{movie.Awards}}</mat-tab>
+                                <mat-tab label="Third"> Content 3 </mat-tab>
+                            </mat-tab-group>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -23,3 +60,8 @@
         </mat-card-content>
     </mat-card>
 </ng-container>
+<ng-template #loading>
+    <div class="flex_spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

@@ -28,6 +28,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatChipsModule } from '@angular/material/chips';
+
+
+// Other
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +64,13 @@ import { MatCardModule } from '@angular/material/card';
     MatTableModule,
     MatProgressSpinnerModule,
     MatExpansionModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatChipsModule,
+
+    // Other imports
+    SharedModule
   ]
 })
 export class MovieModule { }

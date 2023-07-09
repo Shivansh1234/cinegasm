@@ -62,8 +62,8 @@ export class AddMovieComponent {
         this.snackbarService.success(data.message, 'Ok');
       },
       error: (err: CustomError) => {
-        this.snackbarService.error(err.message, 'Ok')
+        this.snackbarService.error(err.message, 'Ok');
       }
-    })
+    });
   }
 }

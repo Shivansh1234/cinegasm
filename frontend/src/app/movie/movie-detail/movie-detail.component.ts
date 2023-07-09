@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { GetMovieBy, Movie } from 'src/app/models/movie';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Movie } from 'src/app/models/movie';
 import { MovieService } from '../movie.service';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-movie-detail',
@@ -15,7 +15,8 @@ export class MovieDetailComponent implements OnInit {
 
   constructor(
     private movieService: MovieService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -24,9 +25,15 @@ export class MovieDetailComponent implements OnInit {
 
   getMovieInfo(): void {
     const movieId: string = this.route.snapshot.paramMap.get('imdbId') as string;
-    const getMovieBy: string = GetMovieBy.IMDbId;
 
-    this.movie$ = this.movieService.getMovieInfoRequest({ movieInput: movieId, getMovieBy });
+    this.movie$ = this.movieService.getMovieDetailRequest(movieId)
+      .pipe(
+        map(movieRes => movieRes.data)
+      );
+  }
+
+  getMoviesBy(type: string, id: string): void {
+    this.router.navigate([`/movie/${type}`, `${id}`]);
   }
 
 }

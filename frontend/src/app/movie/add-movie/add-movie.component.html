@@ -1,6 +1,4 @@
 <div [formGroup]="addMovieForm" align="center">
-    {{addMovieForm.value | json}}
-    {{GetMovieBy.Name | json}}
     <p>
         <mat-radio-group formControlName="getMovieBy">
             <mat-radio-button [value]="GetMovieBy.Name">Search</mat-radio-button>&nbsp;

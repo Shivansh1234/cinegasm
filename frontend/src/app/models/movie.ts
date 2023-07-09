@@ -34,7 +34,7 @@ interface Rating {
     Value: string;
 }
 
-export interface MovieRes extends APIResponse {
+export interface MovieListRes extends APIResponse {
     data: {
         movies: Movie[];
         pageSize: number;
@@ -43,7 +43,7 @@ export interface MovieRes extends APIResponse {
     }
 }
 
-export interface AddMovieRes extends APIResponse {
+export interface MovieRes extends APIResponse {
     data: Movie;
 }
 

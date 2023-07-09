@@ -31,7 +31,8 @@
             "prefix": "lib",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "semi": "error"
       }
     },
     {

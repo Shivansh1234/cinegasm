@@ -1,11 +1,40 @@
-.movie-card-flex {
+.flex-display {
     display: flex;
     flex-direction: column;
+}
+
+.movie-card-flex {
+    @extend .flex-display;
 
     &__top {
-        display: flex;
+        @extend .flex-display;
         justify-content: space-evenly;
         align-items: center;
         flex-direction: row;
+
+        &__poster {
+            @extend .flex-display;
+        }
+
+        &__details {
+            @extend .flex-display;
+
+            &__genre_rating {
+                @extend .flex-display;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
     }
+}
+
+.flex_spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex_gap {
+    display: flex;
+    flex: 1 1 auto;
 }
