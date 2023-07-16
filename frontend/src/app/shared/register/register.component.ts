@@ -12,12 +12,14 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
   constructor(private fb: FormBuilder, private sharedService: SharedService, private snackbarService: SnackbarService,
     private router: Router) { }
 
   registerForm = this.fb.nonNullable.group({
+    fname: ['', Validators.required],
+    lname: ['', Validators.required],
     username: ['', Validators.required],
     password: ['', Validators.required]
   });
@@ -34,9 +36,4 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-
-  ngOnInit(): void {
-    this.registerForm;
-  }
-
 }

@@ -1,9 +1,11 @@
 import { APIResponse } from "./api-response";
 
-export interface User extends APIResponse {
-    data: UserData;
+export interface UserRes extends APIResponse {
+    data: User;
 }
 
-export interface UserData {
+export interface User {
+    fname: string;
+    lname: string;
     username: string;
 }

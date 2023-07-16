@@ -3,6 +3,12 @@ const movieSchema = require('./movieModel');
 
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
+    fname: {
+        type: String
+    },
+    lname: {
+        type: String
+    },
     username: {
         type: String,
         required: true,

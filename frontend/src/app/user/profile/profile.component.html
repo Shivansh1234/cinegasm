@@ -1,1 +1,28 @@
-<p>{{ user.username }}</p>
+<div align="center">
+    <ng-container *ngIf="user$| async as user">
+        <form [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()">
+            <p>
+                <mat-form-field>
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="fname">
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field>
+                    <mat-label>Last Name</mat-label>
+                    <input matInput formControlName="lname">
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username">
+                </mat-form-field>
+            </p>
+
+            <button mat-button type="submit" [disabled]="profileForm.invalid">Update</button>
+
+        </form>
+    </ng-container>
+</div>

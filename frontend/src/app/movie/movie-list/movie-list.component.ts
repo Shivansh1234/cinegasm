@@ -10,7 +10,7 @@ import { CustomError } from 'src/app/models/custom-error';
 import { Movie, MovieListRes } from 'src/app/models/movie';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { MovieService } from '../movie.service';
-import { defaultPageSize, defaultPageOptions } from '../movie.constant';
+import { defaultPageSize, defaultPageOptions, defaultMovieSortColumn } from '../movie.constant';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -55,7 +55,7 @@ export class MovieListComponent implements AfterViewInit {
   };
 
   sortConfig: Sort = {
-    active: 'Title',
+    active: defaultMovieSortColumn,
     direction: ''
   };
 

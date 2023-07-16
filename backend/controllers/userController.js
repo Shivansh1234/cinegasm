@@ -61,11 +61,14 @@ const userLogin = async (req, res, next) => {
 // @access PRIVATE
 const userGet = async (req, res, next) => {
     if (req.user !== undefined) {
-        const username = req.user.username;
-        const user = await User.findOne({ username });
+        const userId = req.user._id;
+        const userFilter = { _id: userId };
+        const user = await User.findOne(userFilter);
 
         const getMessage = 'User data fetched successfully';
         const getData = {
+            fname: user.fname,
+            lname: user.lname,
             username: user.username
         };
         res.send(APIResponse.get(getMessage, getData));
@@ -75,4 +78,20 @@ const userGet = async (req, res, next) => {
     }
 };
 
-module.exports = { userRegister, userLogin, userGet };
+const userUpdate = async (req, res, next) => {
+    if (req.user !== undefined) {
+        const userId = req.user._id;
+        const userFilter = { _id: userId };
+        const updateUserData = { fname: req.body.fname, lname: req.body.lname };
+        const user = await User.findOneAndUpdate(userFilter, updateUserData, { new: true });
+        const getMessage = 'User data fetched successfully';
+        res.send(APIResponse.get(getMessage, user));
+    } else {
+        const error = 'Auth token modified';
+        next(APIError.badRequest(error));
+    }
+};
+
+module.exports = {
+    userRegister, userLogin, userGet, userUpdate
+};

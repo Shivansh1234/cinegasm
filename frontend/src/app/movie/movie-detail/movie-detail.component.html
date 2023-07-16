@@ -5,7 +5,7 @@
             <span class="flex_gap"></span>
             <h1>{{movie.Title | uppercase}}</h1>
             <span class="flex_gap"></span>
-            <h2>{{movie.Year}}</h2>
+            <button mat-stroked-button (click)="getMoviesBy('Year', movie.Year)">{{movie.Year}}</button>
         </mat-card-header>
         <mat-card-content>
             <div class="movie-card-flex">
@@ -18,7 +18,8 @@
                             <div>
                                 <h2>Genre</h2>
                                 <mat-chip-listbox class="mat-mdc-chip-set-stacked">
-                                    <mat-chip *ngFor="let genre of movie.Genre" (click)="getMoviesBy('Genre', genre)">{{genre}}</mat-chip>
+                                    <mat-chip *ngFor="let genre of movie.Genre"
+                                        (click)="getMoviesBy('Genre', genre)">{{genre}}</mat-chip>
                                 </mat-chip-listbox>
                             </div>
                             <div>
@@ -31,24 +32,30 @@
                         </div>
                         <div>
                             <mat-tab-group>
-                                <mat-tab label="Cast & Crew">
+                                <mat-tab>
+                                    <ng-template mat-tab-label>Cast & Crew &nbsp;<mat-icon>groups</mat-icon></ng-template>
                                     <mat-label>Actors</mat-label>
                                     <mat-chip-listbox>
-                                        <mat-chip *ngFor="let actor of movie.Actors" (click)="getMoviesBy('Actors', actor)">{{actor}}</mat-chip>
+                                        <mat-chip *ngFor="let actor of movie.Actors"
+                                            (click)="getMoviesBy('Actors', actor)">{{actor}}</mat-chip>
                                     </mat-chip-listbox>
                                     <mat-divider></mat-divider>
                                     <mat-label>Director</mat-label>
                                     <mat-chip-listbox>
-                                        <mat-chip *ngFor="let director of movie.Director" (click)="getMoviesBy('Director', director)">{{director}}</mat-chip>
+                                        <mat-chip *ngFor="let director of movie.Director"
+                                            (click)="getMoviesBy('Director', director)">{{director}}</mat-chip>
                                     </mat-chip-listbox>
                                     <mat-divider></mat-divider>
                                     <mat-label>Writer</mat-label>
                                     <mat-chip-listbox>
-                                        <mat-chip *ngFor="let writer of movie.Writer" (click)="getMoviesBy('Writer', writer)">{{writer}}</mat-chip>
+                                        <mat-chip *ngFor="let writer of movie.Writer"
+                                            (click)="getMoviesBy('Writer', writer)">{{writer}}</mat-chip>
                                     </mat-chip-listbox>
                                 </mat-tab>
-                                <mat-tab label="Awards">{{movie.Awards}}</mat-tab>
-                                <mat-tab label="Third"> Content 3 </mat-tab>
+                                <mat-tab>
+                                    <ng-template mat-tab-label>Awards &nbsp;<mat-icon>emoji_events</mat-icon></ng-template>
+                                    {{movie.Awards}}
+                                </mat-tab>
                             </mat-tab-group>
                         </div>
                     </div>
