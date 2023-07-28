@@ -2,8 +2,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
-import { LoginForm } from './models/login-form';
-import { LoginRes } from './models/login';
+import { LoginForm } from '../models/login-form';
+import { LoginRes } from '../models/login';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

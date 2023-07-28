@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginGuard } from './guards/login.guard';
-import { LogoutGuard } from './guards/logout.guard';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HomeComponent } from './app-components/home/home.component';
+import { LoginGuard } from './app-guards/login.guard';
+import { LogoutGuard } from './app-guards/logout.guard';
+import { PageNotFoundComponent } from './app-components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },

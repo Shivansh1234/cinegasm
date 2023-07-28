@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomError } from 'src/app/models/custom-error';
 import { User, UserRes } from 'src/app/models/user';
-import { SnackbarService } from 'src/app/snackbar.service';
+import { SnackbarService } from 'src/app/app-services/snackbar.service';
 import { UserService } from '../user.service';
 import { Observable, map, tap } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';

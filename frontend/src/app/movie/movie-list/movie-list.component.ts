@@ -8,7 +8,7 @@ import { Sort } from '@angular/material/sort';
 import { APIResponse } from 'src/app/models/api-response';
 import { CustomError } from 'src/app/models/custom-error';
 import { Movie, MovieListRes } from 'src/app/models/movie';
-import { SnackbarService } from 'src/app/snackbar.service';
+import { SnackbarService } from 'src/app/app-services/snackbar.service';
 import { MovieService } from '../movie.service';
 import { defaultPageSize, defaultPageOptions, defaultMovieSortColumn } from '../movie.constant';
 import { ActivatedRoute, Router } from '@angular/router';

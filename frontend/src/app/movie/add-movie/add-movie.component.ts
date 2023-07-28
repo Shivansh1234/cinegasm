@@ -5,7 +5,7 @@ import { AddMovieForm } from 'src/app/models/add-movie-form';
 import { APIResponse } from 'src/app/models/api-response';
 import { CustomError } from 'src/app/models/custom-error';
 import { GetMovieBy, Movie } from 'src/app/models/movie';
-import { SnackbarService } from 'src/app/snackbar.service';
+import { SnackbarService } from 'src/app/app-services/snackbar.service';
 import { MovieService } from '../movie.service';
 import { AddMovieDialogComponent } from './add-movie-dialog/add-movie-dialog.component';
 

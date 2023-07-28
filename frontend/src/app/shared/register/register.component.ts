@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomError } from '../../models/custom-error';
-import { SnackbarService } from 'src/app/snackbar.service';
+import { SnackbarService } from 'src/app/app-services/snackbar.service';
 import { RegisterForm } from '../../models/register-form';
 import { SharedService } from '../shared.service';
 import { RegisterRes } from 'src/app/models/register';
