@@ -40,13 +40,13 @@ export class MovieService {
   }
 
   getMovieListRequest(sort: string, order: SortDirection, pageIndex: number, pageSize: number, search: string): Observable<MovieListRes> {
-    let userToken = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + userToken
-    });
+    // let userToken = localStorage.getItem('token');
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': 'Bearer ' + userToken
+    // });
     const movieUrl = `${environment.baseURL}/movie/getMovies?sort=${sort}&order=${order}&pageIndex=${pageIndex}&pageSize=${pageSize}&search=${search}`;
-    return this.http.get<MovieListRes>(movieUrl, { headers }).pipe(
+    return this.http.get<MovieListRes>(movieUrl).pipe(
       catchError(this.handleError)
     );
   }

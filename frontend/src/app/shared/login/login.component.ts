@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   onLogin(): void {
     const loginFormData: LoginForm = this.loginForm.getRawValue();
 
-    this.authService.login(loginFormData).subscribe({
+    this.authService.loginRequest(loginFormData).subscribe({
       next: (loginData: LoginRes) => {
         this.authService.storeUserData(loginData.data.token as string);
         if (localStorage.getItem('token')) {

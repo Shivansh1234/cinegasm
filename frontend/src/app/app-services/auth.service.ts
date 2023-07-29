@@ -15,13 +15,13 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(loginFormData: LoginForm): Observable<LoginRes> {
+  loginRequest(loginFormData: LoginForm): Observable<LoginRes> {
     return this.http.post<LoginRes>(`${environment.baseURL}/users/userLogin`, loginFormData).pipe(
       catchError(this.handleError)
     );
   }
 
-  logout(): void {
+  logoutRequest(): void {
     localStorage.removeItem('token');
     this.isLogin$.next(false);
     this.router.navigate(['common/login']);
@@ -29,6 +29,10 @@ export class AuthService {
 
   hasToken(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+  getToken(): string {
+    return localStorage.getItem('token') as string;
   }
 
   isLoggedIn(): Observable<boolean> {

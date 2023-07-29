@@ -21,6 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PageNotFoundComponent } from './app-components/page-not-found/page-not-found.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { LoaderInterceptor } from './app-interceptors/loader.interceptor';
+import { AuthInterceptor } from './app-interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,12 @@ import { LoaderInterceptor } from './app-interceptors/loader.interceptor';
       // Registering default spinner loader
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,
+      multi: true
+    },
+    {
+      // Registering default spinner loader
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true
     }
   ],

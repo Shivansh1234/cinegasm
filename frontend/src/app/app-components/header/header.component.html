@@ -1,24 +1,24 @@
 <mat-toolbar>
     <span [routerLink]="['home']">Cinegasm</span> &nbsp;
-    <button *ngIf="isLoggedIn | async" mat-button [routerLink]="['movie']">
+    <button *ngIf="isLoggedIn$ | async" mat-button [routerLink]="['movie']">
         <span>Movie</span>
     </button>
 
     <span class="flex-spacer"></span>
 
     <!-- Login mode -->
-    <button *ngIf="isLoggedIn | async" mat-button [routerLink]="['user', 'profile']">
+    <button *ngIf="isLoggedIn$ | async" mat-button [routerLink]="['user', 'profile']">
         <span>Profile</span>
     </button> &nbsp;
-    <button *ngIf="isLoggedIn | async" mat-button (click)="logout()">
+    <button *ngIf="isLoggedIn$ | async" mat-button (click)="logout()">
         <span>Logout</span>
     </button>
 
     <!-- Logout mode -->
-    <button *ngIf="(isLoggedIn | async) === false" mat-button [routerLink]="['common', 'login']">
+    <button *ngIf="(isLoggedIn$ | async) === false" mat-button [routerLink]="['common', 'login']">
         <span>Login</span> &nbsp;
     </button>
-    <button *ngIf="(isLoggedIn | async) === false" mat-button [routerLink]="['common', 'register']">
+    <button *ngIf="(isLoggedIn$ | async) === false" mat-button [routerLink]="['common', 'register']">
         <span>Register</span>
     </button>
 </mat-toolbar>

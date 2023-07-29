@@ -9,14 +9,14 @@ import { AuthService } from '../../app-services/auth.service';
 })
 export class HeaderComponent  {
 
-  isLoggedIn: Observable<boolean>;
+  isLoggedIn$: Observable<boolean>;
 
   constructor(private authService: AuthService) {
-    this.isLoggedIn = this.authService.isLoggedIn();
+    this.isLoggedIn$ = this.authService.isLoggedIn();
   }
 
   logout(): void {
-    this.authService.logout();
+    this.authService.logoutRequest();
   }
 
 }

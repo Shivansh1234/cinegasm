@@ -12,13 +12,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUserDataRequest(): Observable<UserRes> {
-    let userToken = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + userToken
-    });
-
-    return this.http.get<UserRes>(`${environment.baseURL}/users/userGet`, { headers }).pipe(
+    return this.http.get<UserRes>(`${environment.baseURL}/users/userGet`).pipe(
       catchError(this.handleError)
     );
   }
