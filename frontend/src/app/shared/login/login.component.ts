@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CustomError } from 'src/app/models/custom-error';
+import { CustomError } from 'src/app/app-models/custom-error';
 import { AuthService } from '../../app-services/auth.service';
 import { SnackbarService } from 'src/app/app-services/snackbar.service';
-import { LoginForm } from 'src/app/models/login-form';
-import { LoginRes } from 'src/app/models/login';
+import { LoginForm } from 'src/app/app-models/login-form';
+import { LoginRes } from 'src/app/app-models/login';
 
 @Component({
   selector: 'app-login',

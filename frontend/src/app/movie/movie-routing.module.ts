@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TypeMoviesComponent } from './type-movies/type-movies.component';
-import { MovieListComponent } from './movie-list/movie-list.component';
-import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import { TypeMoviesComponent } from './components/type-movies/type-movies.component';
+import { MovieListComponent } from './components/movie-list/movie-list.component';
+import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
 
 const routes: Routes = [
   { path: '', component: MovieListComponent },

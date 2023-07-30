@@ -8,11 +8,11 @@ import { MovieRoutingModule } from './movie-routing.module';
 
 // Component imports
 import { MovieComponent } from './movie.component';
-import { MovieListComponent } from './movie-list/movie-list.component';
-import { AddMovieComponent } from './add-movie/add-movie.component';
-import { TypeMoviesComponent } from './type-movies/type-movies.component';
-import { AddMovieDialogComponent } from './add-movie/add-movie-dialog/add-movie-dialog.component';
-import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import { MovieListComponent } from './components/movie-list/movie-list.component';
+import { AddMovieComponent } from './components/add-movie/add-movie.component';
+import { TypeMoviesComponent } from './components/type-movies/type-movies.component';
+import { AddMovieDialogComponent } from './components/add-movie/add-movie-dialog/add-movie-dialog.component';
+import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
 
 // Material imports
 import { MatButtonModule } from '@angular/material/button';

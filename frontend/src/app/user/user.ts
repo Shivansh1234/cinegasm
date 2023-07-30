@@ -1,4 +1,4 @@
-import { APIResponse } from "./api-response";
+import { APIResponse } from "../app-models/api-response";
 
 export interface UserRes extends APIResponse {
     data: User;

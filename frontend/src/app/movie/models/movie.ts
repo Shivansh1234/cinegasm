@@ -1,4 +1,4 @@
-import { APIResponse } from "./api-response";
+import { APIResponse } from "../../app-models/api-response";
 
 // INTERFACES
 export interface Movie {

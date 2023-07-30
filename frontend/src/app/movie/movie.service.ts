@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AddMovieForm } from '../models/add-movie-form';
-import { APIResponse } from '../models/api-response';
-import { GetMovieBy, Movie, MovieListRes, MovieRes } from '../models/movie';
+import { AddMovieForm } from './models/add-movie-form';
+import { APIResponse } from '../app-models/api-response';
+import { GetMovieBy, Movie, MovieListRes, MovieRes } from './models/movie';
 
 @Injectable({
   providedIn: 'root'
